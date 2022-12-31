@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -22,10 +25,6 @@ jobs:
           gpg-passphrase: GPG_PASSPHRASE
       - name: Build with Maven
         run: mvn clean install
-      - name: Deploy to Github Packages
-        run: mvn deploy -P github
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to Central
         run: mvn deploy -P sonatype
         env:
