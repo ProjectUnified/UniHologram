@@ -11,9 +11,14 @@ public interface Hologram<T> {
 
     void addLine(@NotNull HologramLine line);
 
-    void setLine(int index, @NotNull HologramLine line);
+    void insertLine(int index, @NotNull HologramLine line);
 
     void removeLine(int index);
+
+    default void setLine(int index, @NotNull HologramLine line) {
+        insertLine(index, line);
+        removeLine(index + 1);
+    }
 
     String getName();
 

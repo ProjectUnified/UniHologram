@@ -35,6 +35,12 @@ public abstract class SimpleHologram<T> implements Hologram<T> {
     }
 
     @Override
+    public void insertLine(int index, @NotNull HologramLine line) {
+        lines.add(index, line);
+        setLines(lines);
+    }
+
+    @Override
     public void removeLine(int index) {
         lines.remove(index);
         setLines(lines);

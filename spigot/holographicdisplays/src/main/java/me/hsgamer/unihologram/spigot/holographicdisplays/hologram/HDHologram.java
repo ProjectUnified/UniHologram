@@ -81,7 +81,7 @@ public class HDHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void setLine(int index, @NotNull HologramLine line) {
+    public void insertLine(int index, @NotNull HologramLine line) {
         checkHologramInitialized();
         HologramLines hdLines = hologram.getLines();
         if (line instanceof ItemHologramLine) {
@@ -91,7 +91,6 @@ public class HDHologram implements CommonSpigotHologram {
         } else {
             hdLines.insertText(index, line.getRawContent());
         }
-        hdLines.remove(index + 1);
     }
 
     @Override

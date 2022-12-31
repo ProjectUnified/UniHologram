@@ -92,6 +92,12 @@ public class DHHologram implements CommonSpigotHologram {
     }
 
     @Override
+    public void insertLine(int index, @NotNull HologramLine line) {
+        checkHologramInitialized();
+        DHAPI.insertHologramLine(hologram, index, toDHContent(line));
+    }
+
+    @Override
     public void setLine(int index, @NotNull HologramLine line) {
         checkHologramInitialized();
         DHAPI.setHologramLine(hologram, index, toDHContent(line));
