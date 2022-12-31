@@ -12,6 +12,7 @@
     <modules>
         <module>common</module>
         <module>decentholograms</module>
+        <module>holographicdisplays</module>
         <module>bundle</module>
     </modules>
 
