@@ -43,7 +43,7 @@ public class HDHologram implements CommonSpigotHologram {
             if (hdLine instanceof me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine) {
                 lines.add(new ItemHologramLine(((me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine) hdLine).getItemStack()));
             } else if (hdLine instanceof me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) {
-                lines.add(new TextHologramLine(((me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) hdLine).getText()));
+                lines.add(new TextHologramLine(decolorize(((me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) hdLine).getText())));
             } else {
                 lines.add(new EmptyHologramLine());
             }
@@ -60,9 +60,9 @@ public class HDHologram implements CommonSpigotHologram {
             if (line instanceof ItemHologramLine) {
                 hdLines.appendItem(((ItemHologramLine) line).getContent());
             } else if (line instanceof TextHologramLine) {
-                hdLines.appendText(((TextHologramLine) line).getContent());
+                hdLines.appendText(colorize(((TextHologramLine) line).getContent()));
             } else {
-                hdLines.appendText("");
+                hdLines.appendText(line.getRawContent());
             }
         }
     }
@@ -74,9 +74,9 @@ public class HDHologram implements CommonSpigotHologram {
         if (line instanceof ItemHologramLine) {
             hdLines.appendItem(((ItemHologramLine) line).getContent());
         } else if (line instanceof TextHologramLine) {
-            hdLines.appendText(((TextHologramLine) line).getContent());
+            hdLines.appendText(colorize(((TextHologramLine) line).getContent()));
         } else {
-            hdLines.appendText("");
+            hdLines.appendText(line.getRawContent());
         }
     }
 
@@ -87,9 +87,9 @@ public class HDHologram implements CommonSpigotHologram {
         if (line instanceof ItemHologramLine) {
             hdLines.insertItem(index, ((ItemHologramLine) line).getContent());
         } else if (line instanceof TextHologramLine) {
-            hdLines.insertText(index, ((TextHologramLine) line).getContent());
+            hdLines.insertText(index, colorize(((TextHologramLine) line).getContent()));
         } else {
-            hdLines.insertText(index, "");
+            hdLines.insertText(index, line.getRawContent());
         }
         hdLines.remove(index + 1);
     }
