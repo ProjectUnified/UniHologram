@@ -7,3 +7,8 @@ me.hsgamer.unihologram.spigot.common.line
 me.hsgamer.unihologram.spigot.common.provider
 me.hsgamer.unihologram.spigot.decentholograms.hologram
 me.hsgamer.unihologram.spigot.decentholograms.provider
+me.hsgamer.unihologram.spigot.holographicdisplays.hologram
+me.hsgamer.unihologram.spigot.holographicdisplays.provider
+me.hsgamer.unihologram.spigot.test
+me.hsgamer.unihologram.spigot.test.command
+me.hsgamer.unihologram.spigot.test.command.subcommand
