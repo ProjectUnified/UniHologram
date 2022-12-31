@@ -10,9 +10,18 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A hologram provider for Spigot.
+ * It will use the best provider available.
+ */
 public class SpigotHologramProvider implements CommonSpigotHologramProvider {
     private final CommonSpigotHologramProvider provider;
 
+    /**
+     * Create a new hologram provider
+     *
+     * @param plugin the plugin
+     */
     public SpigotHologramProvider(Plugin plugin) {
         if (DHHologramProvider.isAvailable()) {
             provider = new DHHologramProvider();
@@ -23,6 +32,9 @@ public class SpigotHologramProvider implements CommonSpigotHologramProvider {
         }
     }
 
+    /**
+     * Create a new hologram provider
+     */
     public SpigotHologramProvider() {
         this(JavaPlugin.getProvidingPlugin(SpigotHologramProvider.class));
     }

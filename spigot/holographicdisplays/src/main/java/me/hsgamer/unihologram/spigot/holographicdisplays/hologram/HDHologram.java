@@ -18,11 +18,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * The hologram for HolographicDisplays
+ */
 public class HDHologram implements CommonSpigotHologram {
     private final String name;
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
 
+    /**
+     * Create a new hologram
+     *
+     * @param plugin   the plugin
+     * @param name     the name
+     * @param location the location
+     */
     public HDHologram(Plugin plugin, String name, Location location) {
         this.name = name;
         this.hologramSupplier = () -> HolographicDisplaysAPI.get(plugin).createHologram(location);

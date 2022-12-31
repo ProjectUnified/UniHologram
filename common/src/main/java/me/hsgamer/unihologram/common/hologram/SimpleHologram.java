@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A simple hologram for features that only support updating the whole hologram
+ *
+ * @param <T> the type of the location
+ */
 public abstract class SimpleHologram<T> implements Hologram<T> {
     private final List<HologramLine> lines;
     private final String name;

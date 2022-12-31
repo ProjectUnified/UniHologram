@@ -7,7 +7,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The hologram provider for DecentHolograms
+ */
 public class DHHologramProvider implements CommonSpigotHologramProvider {
+    /**
+     * Check if DecentHolograms is available
+     *
+     * @return true if available
+     */
     public static boolean isAvailable() {
         return Bukkit.getPluginManager().isPluginEnabled("DecentHolograms");
     }

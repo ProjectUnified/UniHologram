@@ -6,6 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * An empty line
+ */
 public class EmptyHologramLine implements HologramLine {
     @Override
     public @NotNull String getContent() {

@@ -6,6 +6,9 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * The common hologram for Spigot
+ */
 public interface CommonSpigotHologram extends Hologram<Location> {
     @NotNull
     default String colorize(@Nullable String string) {

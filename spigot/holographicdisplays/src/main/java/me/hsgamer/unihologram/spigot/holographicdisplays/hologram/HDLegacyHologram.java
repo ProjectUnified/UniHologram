@@ -19,12 +19,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * The legacy hologram for HolographicDisplays
+ */
 @SuppressWarnings("deprecation")
 public class HDLegacyHologram implements CommonSpigotHologram {
     private final String name;
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
 
+    /**
+     * Create a new hologram
+     *
+     * @param plugin   the plugin
+     * @param name     the name
+     * @param location the location
+     */
     public HDLegacyHologram(Plugin plugin, String name, Location location) {
         this.name = name;
         this.hologramSupplier = () -> HologramsAPI.createHologram(plugin, location);

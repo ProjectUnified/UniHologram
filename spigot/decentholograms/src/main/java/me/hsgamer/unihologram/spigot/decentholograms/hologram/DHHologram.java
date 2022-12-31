@@ -19,6 +19,9 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * The hologram for DecentHolograms
+ */
 public class DHHologram implements CommonSpigotHologram {
     private static final boolean IS_FLAT;
 
@@ -36,6 +39,12 @@ public class DHHologram implements CommonSpigotHologram {
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
 
+    /**
+     * Create a new hologram
+     *
+     * @param name     the name of the hologram
+     * @param location the location of the hologram
+     */
     public DHHologram(String name, Location location) {
         hologramSupplier = () -> DHAPI.createHologram(name, location);
     }

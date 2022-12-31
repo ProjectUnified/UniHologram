@@ -5,6 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * A hologram that does nothing. Used as a fallback hologram
+ *
+ * @param <T> the type of the location
+ */
 public class NoneHologram<T> extends SimpleHologram<T> {
     private T location;
 
