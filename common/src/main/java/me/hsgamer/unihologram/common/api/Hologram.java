@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface Hologram {
+public interface Hologram<T> {
     @NotNull List<HologramLine<?>> getLines();
 
     void setLines(@NotNull List<HologramLine<?>> lines);
@@ -20,4 +20,8 @@ public interface Hologram {
     void init();
 
     void clear();
+
+    T getLocation();
+
+    void setLocation(T location);
 }

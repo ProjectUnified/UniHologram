@@ -7,6 +7,7 @@ import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
+import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
 import org.bukkit.Location;
@@ -15,9 +16,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram {
+public class DHHologram implements CommonSpigotHologram {
     private static final boolean IS_FLAT;
 
     static {
@@ -31,13 +33,11 @@ public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram {
         IS_FLAT = isFlat;
     }
 
-    private final String name;
-    private final Location location;
+    private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
 
     public DHHologram(String name, Location location) {
-        this.name = name;
-        this.location = location;
+        hologramSupplier = () -> DHAPI.createHologram(name, location);
     }
 
     private void checkHologramInitialized() {
@@ -69,6 +69,7 @@ public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram {
             switch (line.getType()) {
                 case ICON:
                     return new ItemHologramLine(line.getItem().parse());
+                case SMALLHEAD:
                 case HEAD:
                     return new SkullHologramLine(line.getItem().getExtras());
                 default:
@@ -103,12 +104,12 @@ public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram {
 
     @Override
     public String getName() {
-        return name;
+        return hologram.getName();
     }
 
     @Override
     public void init() {
-        hologram = DHAPI.createHologram(name, location);
+        hologram = hologramSupplier.get();
     }
 
     @Override
@@ -121,5 +122,17 @@ public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram {
         } catch (Exception ignored) {
             // IGNORED
         }
+    }
+
+    @Override
+    public Location getLocation() {
+        checkHologramInitialized();
+        return hologram.getLocation();
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        checkHologramInitialized();
+        DHAPI.moveHologram(hologram, location);
     }
 }

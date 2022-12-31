@@ -14,12 +14,12 @@ public class SpigotHologramProvider implements CommonSpigotHologramProvider {
         if (DHHologramProvider.isAvailable()) {
             provider = new DHHologramProvider();
         } else {
-            provider = (name, location) -> new NoneHologram(name);
+            provider = NoneHologram::new;
         }
     }
 
     @Override
-    public @NotNull Hologram createHologram(@NotNull String name, @NotNull Location location) {
+    public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
         return provider.createHologram(name, location);
     }
 }

@@ -5,9 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class NoneHologram extends SimpleHologram {
-    public NoneHologram(String name) {
+public class NoneHologram<T> extends SimpleHologram<T> {
+    private T location;
+
+    public NoneHologram(String name, T location) {
         super(name);
+        this.location = location;
     }
 
     @Override
@@ -23,5 +26,15 @@ public class NoneHologram extends SimpleHologram {
     @Override
     public void clear() {
         // EMPTY
+    }
+
+    @Override
+    public T getLocation() {
+        return location;
+    }
+
+    @Override
+    public void setLocation(T location) {
+        this.location = location;
     }
 }

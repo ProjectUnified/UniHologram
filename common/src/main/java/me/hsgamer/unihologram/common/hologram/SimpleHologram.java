@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class SimpleHologram implements Hologram {
+public abstract class SimpleHologram<T> implements Hologram<T> {
     private final List<HologramLine<?>> lines;
     private final String name;
 
