@@ -33,9 +33,9 @@ public class HDHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public @NotNull List<HologramLine<?>> getLines() {
+    public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
-        List<HologramLine<?>> lines = new ArrayList<>();
+        List<HologramLine> lines = new ArrayList<>();
         HologramLines hdLines = hologram.getLines();
         int size = hdLines.size();
         for (int i = 0; i < size; i++) {
@@ -52,11 +52,11 @@ public class HDHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void setLines(@NotNull List<HologramLine<?>> lines) {
+    public void setLines(@NotNull List<HologramLine> lines) {
         checkHologramInitialized();
         HologramLines hdLines = hologram.getLines();
         hdLines.clear();
-        for (HologramLine<?> line : lines) {
+        for (HologramLine line : lines) {
             if (line instanceof ItemHologramLine) {
                 hdLines.appendItem(((ItemHologramLine) line).getContent());
             } else if (line instanceof TextHologramLine) {
@@ -68,7 +68,7 @@ public class HDHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void addLine(@NotNull HologramLine<?> line) {
+    public void addLine(@NotNull HologramLine line) {
         checkHologramInitialized();
         HologramLines hdLines = hologram.getLines();
         if (line instanceof ItemHologramLine) {
@@ -81,7 +81,7 @@ public class HDHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void setLine(int index, @NotNull HologramLine<?> line) {
+    public void setLine(int index, @NotNull HologramLine line) {
         checkHologramInitialized();
         HologramLines hdLines = hologram.getLines();
         if (line instanceof ItemHologramLine) {

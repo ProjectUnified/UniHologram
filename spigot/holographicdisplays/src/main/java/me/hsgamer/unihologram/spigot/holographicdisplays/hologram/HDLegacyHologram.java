@@ -35,9 +35,9 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public @NotNull List<HologramLine<?>> getLines() {
+    public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
-        List<HologramLine<?>> lines = new ArrayList<>();
+        List<HologramLine> lines = new ArrayList<>();
         int size = hologram.size();
         for (int i = 0; i < size; i++) {
             com.gmail.filoghost.holographicdisplays.api.line.HologramLine hdLine = hologram.getLine(i);
@@ -53,10 +53,10 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void setLines(@NotNull List<HologramLine<?>> lines) {
+    public void setLines(@NotNull List<HologramLine> lines) {
         checkHologramInitialized();
         hologram.clearLines();
-        for (HologramLine<?> line : lines) {
+        for (HologramLine line : lines) {
             if (line instanceof ItemHologramLine) {
                 hologram.appendItemLine(((ItemHologramLine) line).getContent());
             } else if (line instanceof TextHologramLine) {
@@ -68,7 +68,7 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void addLine(@NotNull HologramLine<?> line) {
+    public void addLine(@NotNull HologramLine line) {
         checkHologramInitialized();
         if (line instanceof ItemHologramLine) {
             hologram.appendItemLine(((ItemHologramLine) line).getContent());
@@ -80,7 +80,7 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void setLine(int index, @NotNull HologramLine<?> line) {
+    public void setLine(int index, @NotNull HologramLine line) {
         checkHologramInitialized();
         if (line instanceof ItemHologramLine) {
             hologram.insertItemLine(index, ((ItemHologramLine) line).getContent());

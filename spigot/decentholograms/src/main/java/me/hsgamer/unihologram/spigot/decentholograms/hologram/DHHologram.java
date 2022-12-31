@@ -44,7 +44,7 @@ public class DHHologram implements CommonSpigotHologram {
         Preconditions.checkNotNull(hologram, "Hologram is not initialized");
     }
 
-    private String toDHContent(HologramLine<?> line) {
+    private String toDHContent(HologramLine line) {
         if (line instanceof ItemHologramLine) {
             return "#ICON:" + HologramItem.fromItemStack(((ItemHologramLine) line).getContent()).getContent();
         } else if (line instanceof SkullHologramLine) {
@@ -59,7 +59,7 @@ public class DHHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public @NotNull List<HologramLine<?>> getLines() {
+    public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
         HologramPage page = hologram.getPage(0);
         if (page == null) {
@@ -79,20 +79,20 @@ public class DHHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public void setLines(@NotNull List<HologramLine<?>> lines) {
+    public void setLines(@NotNull List<HologramLine> lines) {
         checkHologramInitialized();
         List<String> content = lines.stream().map(this::toDHContent).collect(Collectors.toList());
         DHAPI.setHologramLines(hologram, content);
     }
 
     @Override
-    public void addLine(@NotNull HologramLine<?> line) {
+    public void addLine(@NotNull HologramLine line) {
         checkHologramInitialized();
         DHAPI.addHologramLine(hologram, toDHContent(line));
     }
 
     @Override
-    public void setLine(int index, @NotNull HologramLine<?> line) {
+    public void setLine(int index, @NotNull HologramLine line) {
         checkHologramInitialized();
         DHAPI.setHologramLine(hologram, index, toDHContent(line));
     }

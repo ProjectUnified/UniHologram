@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class SimpleHologram<T> implements Hologram<T> {
-    private final List<HologramLine<?>> lines;
+    private final List<HologramLine> lines;
     private final String name;
 
     protected SimpleHologram(String name) {
@@ -18,18 +18,18 @@ public abstract class SimpleHologram<T> implements Hologram<T> {
     }
 
     @Override
-    public @NotNull List<HologramLine<?>> getLines() {
+    public @NotNull List<HologramLine> getLines() {
         return Collections.unmodifiableList(lines);
     }
 
     @Override
-    public void addLine(@NotNull HologramLine<?> line) {
+    public void addLine(@NotNull HologramLine line) {
         lines.add(line);
         setLines(lines);
     }
 
     @Override
-    public void setLine(int index, @NotNull HologramLine<?> line) {
+    public void setLine(int index, @NotNull HologramLine line) {
         lines.set(index, line);
         setLines(lines);
     }

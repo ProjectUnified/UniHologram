@@ -5,9 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
-public abstract class AbstractHologramLine<T> implements HologramLine<T> {
+public abstract class AbstractHologramLine<T> implements HologramLine {
     private final T content;
     private final Map<String, Object> settings;
 
@@ -24,11 +23,6 @@ public abstract class AbstractHologramLine<T> implements HologramLine<T> {
     @Override
     public T getContent() {
         return content;
-    }
-
-    @Override
-    public @NotNull String getRawContent() {
-        return Objects.toString(content);
     }
 
     @NotNull

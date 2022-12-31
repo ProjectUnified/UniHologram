@@ -14,7 +14,7 @@ public class NoneHologram<T> extends SimpleHologram<T> {
     }
 
     @Override
-    public void setLines(@NotNull List<HologramLine<?>> lines) {
+    public void setLines(@NotNull List<HologramLine> lines) {
         // EMPTY
     }
 
