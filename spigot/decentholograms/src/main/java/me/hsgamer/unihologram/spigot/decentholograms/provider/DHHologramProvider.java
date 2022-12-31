@@ -13,7 +13,7 @@ public class DHHologramProvider implements CommonSpigotHologramProvider {
     }
 
     @Override
-    public @NotNull Hologram createHologram(@NotNull String name, @NotNull Location location) {
+    public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
         return new DHHologram(name, location);
     }
 }
