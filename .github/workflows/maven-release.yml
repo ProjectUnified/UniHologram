@@ -24,6 +24,8 @@ jobs:
         run: mvn clean install
       - name: Deploy to Github Packages
         run: mvn deploy -P github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to Central
         run: mvn deploy -P sonatype
         env:
