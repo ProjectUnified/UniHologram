@@ -15,6 +15,8 @@ public interface Hologram {
 
     void removeLine(int index);
 
+    String getName();
+
     void init();
 
     void clear();

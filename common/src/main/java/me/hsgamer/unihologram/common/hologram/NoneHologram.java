@@ -6,6 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class NoneHologram extends SimpleHologram {
+    public NoneHologram(String name) {
+        super(name);
+    }
+
     @Override
     public void setLines(@NotNull List<HologramLine<?>> lines) {
         // EMPTY

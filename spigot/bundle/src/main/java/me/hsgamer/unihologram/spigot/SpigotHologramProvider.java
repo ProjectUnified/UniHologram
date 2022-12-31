@@ -14,7 +14,7 @@ public class SpigotHologramProvider implements CommonSpigotHologramProvider {
         if (DHHologramProvider.isAvailable()) {
             provider = new DHHologramProvider();
         } else {
-            provider = (name, location) -> new NoneHologram();
+            provider = (name, location) -> new NoneHologram(name);
         }
     }
 

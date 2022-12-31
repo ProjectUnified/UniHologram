@@ -10,8 +10,10 @@ import java.util.List;
 
 public abstract class SimpleHologram implements Hologram {
     private final List<HologramLine<?>> lines;
+    private final String name;
 
-    protected SimpleHologram() {
+    protected SimpleHologram(String name) {
+        this.name = name;
         this.lines = new ArrayList<>();
     }
 
@@ -36,5 +38,10 @@ public abstract class SimpleHologram implements Hologram {
     public void removeLine(int index) {
         lines.remove(index);
         setLines(lines);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
