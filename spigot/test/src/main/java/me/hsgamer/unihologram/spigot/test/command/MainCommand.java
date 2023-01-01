@@ -32,6 +32,7 @@ public class MainCommand extends Command {
         subCommandManager.registerSubcommand(new SetLineCommand(plugin));
         subCommandManager.registerSubcommand(new InsertLineCommand(plugin));
         subCommandManager.registerSubcommand(new CountLineCommand(plugin));
+        subCommandManager.registerSubcommand(new MoveCommand(plugin));
     }
 
     @Override
