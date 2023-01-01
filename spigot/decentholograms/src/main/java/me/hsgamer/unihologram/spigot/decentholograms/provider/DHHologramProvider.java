@@ -33,15 +33,15 @@ public class DHHologramProvider implements HologramProvider<Location> {
 
     @Override
     public Optional<Hologram<Location>> getHologram(@NotNull String name) {
-        return Optional.ofNullable(DHAPI.getHologram(name)).map(hologram -> new DHHologram(name, hologram));
+        return Optional.ofNullable(DHAPI.getHologram(name)).map(DHHologram::new);
     }
 
     @Override
     public Collection<Hologram<Location>> getAllHolograms() {
         return DecentHologramsAPI.get().getHologramManager().getHolograms()
                 .stream()
-                .map(hologram -> new DHHologram(hologram.getName(), hologram))
-                .collect(Collectors.toList());
+                .map(DHHologram::new)
+                .collect(Collectors.toSet());
     }
 
     @Override

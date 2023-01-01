@@ -37,6 +37,7 @@ public class DHHologram implements CommonSpigotHologram {
     }
 
     private final Supplier<Hologram> hologramSupplier;
+    private final String name;
     private Hologram hologram;
 
     /**
@@ -46,19 +47,18 @@ public class DHHologram implements CommonSpigotHologram {
      * @param location the location of the hologram
      */
     public DHHologram(String name, Location location) {
+        this.name = name;
         hologramSupplier = () -> DHAPI.createHologram(name, location);
     }
 
     /**
      * Create a new hologram
      *
-     * @param name     the name of the hologram
      * @param hologram the hologram
      */
-    public DHHologram(String name, Hologram hologram) {
+    public DHHologram(Hologram hologram) {
+        this(hologram.getName(), hologram.getLocation().clone());
         this.hologram = hologram;
-        Location location = hologram.getLocation();
-        hologramSupplier = () -> DHAPI.createHologram(name, location);
     }
 
     private void checkHologramInitialized() {
@@ -150,7 +150,7 @@ public class DHHologram implements CommonSpigotHologram {
 
     @Override
     public String getName() {
-        return hologram.getName();
+        return name;
     }
 
     @Override
