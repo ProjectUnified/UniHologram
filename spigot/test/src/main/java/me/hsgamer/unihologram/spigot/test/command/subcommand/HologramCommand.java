@@ -30,7 +30,7 @@ public abstract class HologramCommand extends SubCommand {
     @Override
     public void onSubCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String... args) {
         Hologram<Location> hologram = plugin.getHologramManager().getHologram(args[0]);
-        if (hologram == null) {
+        if (hologram == null || !hologram.isInitialized()) {
             sender.sendMessage("Hologram not found");
             return;
         }
