@@ -1,31 +1,23 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
-import me.hsgamer.hscore.bukkit.command.sub.SubCommand;
+import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
-public class DeleteCommand extends SubCommand {
-    private final UniHologramPlugin plugin;
-
+public class DeleteCommand extends HologramCommand {
     public DeleteCommand(UniHologramPlugin plugin) {
-        super("delete", "Delete a hologram", "/unihologram delete <name>", "unihologram.delete", true);
-        this.plugin = plugin;
+        super(plugin, "delete", "Delete a hologram", "/unihologram delete <name>", "unihologram.delete", true);
     }
 
     @Override
-    public void onSubCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String... args) {
-        String name = args[0];
-        if (plugin.getHologramManager().getHologram(name) == null) {
-            sender.sendMessage("The hologram does not exist");
-            return;
-        }
-        plugin.getHologramManager().removeHologram(name);
+    protected void onHologramCommand(CommandSender sender, Hologram<Location> hologram, String[] args) {
+        hologram.clear();
         sender.sendMessage("Deleted");
     }
 
     @Override
-    public boolean isProperUsage(@NotNull CommandSender sender, @NotNull String label, @NotNull String... args) {
-        return args.length > 0;
+    protected int getMinimumArgumentLength() {
+        return 0;
     }
 }

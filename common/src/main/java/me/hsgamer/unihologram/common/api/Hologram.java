@@ -58,6 +58,25 @@ public interface Hologram<T> {
     }
 
     /**
+     * Get the line at the index
+     *
+     * @param index the index
+     * @return the line
+     */
+    default HologramLine getLine(int index) {
+        return getLines().get(index);
+    }
+
+    /**
+     * Get the amount of lines
+     *
+     * @return the amount
+     */
+    default int size() {
+        return getLines().size();
+    }
+
+    /**
      * Get the name of the hologram
      *
      * @return the name

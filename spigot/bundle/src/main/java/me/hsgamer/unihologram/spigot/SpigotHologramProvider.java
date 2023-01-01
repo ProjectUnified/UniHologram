@@ -1,8 +1,8 @@
 package me.hsgamer.unihologram.spigot;
 
 import me.hsgamer.unihologram.common.api.Hologram;
+import me.hsgamer.unihologram.common.api.HologramProvider;
 import me.hsgamer.unihologram.common.hologram.NoneHologram;
-import me.hsgamer.unihologram.spigot.common.provider.CommonSpigotHologramProvider;
 import me.hsgamer.unihologram.spigot.decentholograms.provider.DHHologramProvider;
 import me.hsgamer.unihologram.spigot.holographicdisplays.provider.HDHologramProvider;
 import org.bukkit.Location;
@@ -10,12 +10,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+
 /**
  * A hologram provider for Spigot.
  * It will use the best provider available.
  */
-public class SpigotHologramProvider implements CommonSpigotHologramProvider {
-    private final CommonSpigotHologramProvider provider;
+public class SpigotHologramProvider implements HologramProvider<Location> {
+    private final HologramProvider<Location> provider;
 
     /**
      * Create a new hologram provider
@@ -28,7 +32,27 @@ public class SpigotHologramProvider implements CommonSpigotHologramProvider {
         } else if (HDHologramProvider.isAvailable()) {
             provider = new HDHologramProvider(plugin);
         } else {
-            provider = NoneHologram::new;
+            provider = new HologramProvider<Location>() {
+                @Override
+                public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
+                    return new NoneHologram<>(name, location);
+                }
+
+                @Override
+                public Optional<Hologram<Location>> getHologram(@NotNull String name) {
+                    return Optional.empty();
+                }
+
+                @Override
+                public Collection<Hologram<Location>> getAllHolograms() {
+                    return Collections.emptySet();
+                }
+
+                @Override
+                public boolean isLocal() {
+                    return true;
+                }
+            };
         }
     }
 
@@ -42,5 +66,20 @@ public class SpigotHologramProvider implements CommonSpigotHologramProvider {
     @Override
     public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
         return provider.createHologram(name, location);
+    }
+
+    @Override
+    public Optional<Hologram<Location>> getHologram(@NotNull String name) {
+        return provider.getHologram(name);
+    }
+
+    @Override
+    public Collection<Hologram<Location>> getAllHolograms() {
+        return provider.getAllHolograms();
+    }
+
+    @Override
+    public boolean isLocal() {
+        return provider.isLocal();
     }
 }

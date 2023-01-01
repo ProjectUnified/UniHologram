@@ -1,7 +1,7 @@
 package me.hsgamer.unihologram.spigot.holographicdisplays.provider;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.common.provider.CommonSpigotHologramProvider;
+import me.hsgamer.unihologram.common.provider.LocalHologramProvider;
 import me.hsgamer.unihologram.spigot.holographicdisplays.hologram.HDHologram;
 import me.hsgamer.unihologram.spigot.holographicdisplays.hologram.HDLegacyHologram;
 import org.bukkit.Bukkit;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The hologram provider for HolographicDisplays
  */
-public class HDHologramProvider implements CommonSpigotHologramProvider {
+public class HDHologramProvider extends LocalHologramProvider<Location> {
     private static final boolean IS_NEW;
 
     static {
@@ -47,7 +47,7 @@ public class HDHologramProvider implements CommonSpigotHologramProvider {
     }
 
     @Override
-    public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
+    protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location) {
         return IS_NEW ? new HDHologram(plugin, name, location) : new HDLegacyHologram(plugin, name, location);
     }
 }

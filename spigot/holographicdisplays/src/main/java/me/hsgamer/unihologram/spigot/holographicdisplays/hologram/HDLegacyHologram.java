@@ -44,20 +44,23 @@ public class HDLegacyHologram implements CommonSpigotHologram {
         Preconditions.checkNotNull(hologram, "Hologram is not initialized");
     }
 
+    private HologramLine fromHDLine(com.gmail.filoghost.holographicdisplays.api.line.HologramLine hdLine) {
+        if (hdLine instanceof ItemLine) {
+            return new ItemHologramLine(((ItemLine) hdLine).getItemStack());
+        } else if (hdLine instanceof TextLine) {
+            return new TextHologramLine(decolorize(((TextLine) hdLine).getText()));
+        } else {
+            return new EmptyHologramLine();
+        }
+    }
+
     @Override
     public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
         List<HologramLine> lines = new ArrayList<>();
         int size = hologram.size();
         for (int i = 0; i < size; i++) {
-            com.gmail.filoghost.holographicdisplays.api.line.HologramLine hdLine = hologram.getLine(i);
-            if (hdLine instanceof ItemLine) {
-                lines.add(new ItemHologramLine(((ItemLine) hdLine).getItemStack()));
-            } else if (hdLine instanceof TextLine) {
-                lines.add(new TextHologramLine(decolorize(((TextLine) hdLine).getText())));
-            } else {
-                lines.add(new EmptyHologramLine());
-            }
+            lines.add(fromHDLine(hologram.getLine(i)));
         }
         return Collections.unmodifiableList(lines);
     }
@@ -105,6 +108,18 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     public void removeLine(int index) {
         checkHologramInitialized();
         hologram.removeLine(index);
+    }
+
+    @Override
+    public HologramLine getLine(int index) {
+        checkHologramInitialized();
+        return fromHDLine(hologram.getLine(index));
+    }
+
+    @Override
+    public int size() {
+        checkHologramInitialized();
+        return hologram.size();
     }
 
     @Override

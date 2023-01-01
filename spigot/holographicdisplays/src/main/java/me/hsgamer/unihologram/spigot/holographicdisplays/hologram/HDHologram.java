@@ -42,6 +42,16 @@ public class HDHologram implements CommonSpigotHologram {
         Preconditions.checkNotNull(hologram, "Hologram is not initialized");
     }
 
+    private HologramLine fromHDLine(me.filoghost.holographicdisplays.api.hologram.line.HologramLine hdLine) {
+        if (hdLine instanceof me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine) {
+            return new ItemHologramLine(((me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine) hdLine).getItemStack());
+        } else if (hdLine instanceof me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) {
+            return new TextHologramLine(decolorize(((me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) hdLine).getText()));
+        } else {
+            return new EmptyHologramLine();
+        }
+    }
+
     @Override
     public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
@@ -49,14 +59,7 @@ public class HDHologram implements CommonSpigotHologram {
         HologramLines hdLines = hologram.getLines();
         int size = hdLines.size();
         for (int i = 0; i < size; i++) {
-            me.filoghost.holographicdisplays.api.hologram.line.HologramLine hdLine = hdLines.get(i);
-            if (hdLine instanceof me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine) {
-                lines.add(new ItemHologramLine(((me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine) hdLine).getItemStack()));
-            } else if (hdLine instanceof me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) {
-                lines.add(new TextHologramLine(decolorize(((me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine) hdLine).getText())));
-            } else {
-                lines.add(new EmptyHologramLine());
-            }
+            lines.add(fromHDLine(hdLines.get(i)));
         }
         return Collections.unmodifiableList(lines);
     }
@@ -107,6 +110,18 @@ public class HDHologram implements CommonSpigotHologram {
     public void removeLine(int index) {
         checkHologramInitialized();
         hologram.getLines().remove(index);
+    }
+
+    @Override
+    public HologramLine getLine(int index) {
+        checkHologramInitialized();
+        return fromHDLine(hologram.getLines().get(index));
+    }
+
+    @Override
+    public int size() {
+        checkHologramInitialized();
+        return hologram.getLines().size();
     }
 
     @Override

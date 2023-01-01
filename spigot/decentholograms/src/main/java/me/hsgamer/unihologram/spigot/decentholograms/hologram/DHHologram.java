@@ -49,6 +49,18 @@ public class DHHologram implements CommonSpigotHologram {
         hologramSupplier = () -> DHAPI.createHologram(name, location);
     }
 
+    /**
+     * Create a new hologram
+     *
+     * @param name     the name of the hologram
+     * @param hologram the hologram
+     */
+    public DHHologram(String name, Hologram hologram) {
+        this.hologram = hologram;
+        Location location = hologram.getLocation();
+        hologramSupplier = () -> DHAPI.createHologram(name, location);
+    }
+
     private void checkHologramInitialized() {
         Preconditions.checkNotNull(hologram, "Hologram is not initialized");
     }
@@ -67,6 +79,18 @@ public class DHHologram implements CommonSpigotHologram {
         }
     }
 
+    private HologramLine fromDHLine(eu.decentsoftware.holograms.api.holograms.HologramLine line) {
+        switch (line.getType()) {
+            case ICON:
+                return new ItemHologramLine(line.getItem().parse());
+            case SMALLHEAD:
+            case HEAD:
+                return new SkullHologramLine(line.getItem().getExtras());
+            default:
+                return new TextHologramLine(line.getContent());
+        }
+    }
+
     @Override
     public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
@@ -74,17 +98,7 @@ public class DHHologram implements CommonSpigotHologram {
         if (page == null) {
             return Collections.emptyList();
         }
-        return page.getLines().stream().map(line -> {
-            switch (line.getType()) {
-                case ICON:
-                    return new ItemHologramLine(line.getItem().parse());
-                case SMALLHEAD:
-                case HEAD:
-                    return new SkullHologramLine(line.getItem().getExtras());
-                default:
-                    return new TextHologramLine(line.getContent());
-            }
-        }).collect(Collectors.toList());
+        return page.getLines().stream().map(this::fromDHLine).collect(Collectors.toList());
     }
 
     @Override
@@ -114,7 +128,24 @@ public class DHHologram implements CommonSpigotHologram {
 
     @Override
     public void removeLine(int index) {
+        checkHologramInitialized();
         DHAPI.removeHologramLine(hologram, index);
+    }
+
+    @Override
+    public HologramLine getLine(int index) {
+        checkHologramInitialized();
+        HologramPage page = hologram.getPage(0);
+        if (page == null) {
+            throw new IndexOutOfBoundsException("Page 0 is not found");
+        }
+        return fromDHLine(page.getLine(index));
+    }
+
+    @Override
+    public int size() {
+        checkHologramInitialized();
+        return hologram.size();
     }
 
     @Override
