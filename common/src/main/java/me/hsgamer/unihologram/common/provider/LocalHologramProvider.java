@@ -32,17 +32,11 @@ public abstract class LocalHologramProvider<T> implements HologramProvider<T> {
      */
     @Override
     public final @NotNull Hologram<T> createHologram(@NotNull String name, @NotNull T location) {
-        Hologram<T> hologram;
         if (createdHolograms.containsKey(name)) {
-            hologram = createdHolograms.get(name);
-            if (!hologram.isInitialized()) {
-                hologram.init();
-            }
-            hologram.setLocation(location);
-        } else {
-            hologram = newHologram(name, location);
-            createdHolograms.put(name, hologram);
+            throw new IllegalArgumentException("Hologram " + name + " already exists");
         }
+        Hologram<T> hologram = newHologram(name, location);
+        createdHolograms.put(name, hologram);
         return hologram;
     }
 
