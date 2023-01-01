@@ -47,9 +47,18 @@ public class HologramManager {
         this.handler = hologramHandler;
     }
 
-    public void createHologram(String name, Location location) {
-        Hologram<Location> hologram = handler.createHologram(name, location);
-        hologram.init();
+    public boolean createHologram(String name, Location location) {
+        Hologram<Location> existingHologram = getHologram(name);
+        if (existingHologram != null) {
+            if (existingHologram.isInitialized()) {
+                return false;
+            }
+            existingHologram.init();
+            existingHologram.setLocation(location);
+        } else {
+            handler.createHologram(name, location);
+        }
+        return true;
     }
 
     public void clearAll() {

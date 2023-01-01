@@ -1,9 +1,7 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.hscore.bukkit.command.sub.SubCommand;
-import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -20,16 +18,11 @@ public class CreateCommand extends SubCommand {
     public void onSubCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String... args) {
         Player player = (Player) sender;
         String name = args[0];
-        Hologram<Location> hologram = plugin.getHologramManager().getHologram(name);
-        if (hologram == null) {
-            plugin.getHologramManager().createHologram(name, player.getLocation());
-        } else if (hologram.isInitialized()) {
-            sender.sendMessage("The hologram already exists");
-            return;
+        if (plugin.getHologramManager().createHologram(name, player.getLocation())) {
+            player.sendMessage("Created");
         } else {
-            hologram.init();
+            sender.sendMessage("The hologram already exists");
         }
-        sender.sendMessage("Created");
     }
 
     @Override
