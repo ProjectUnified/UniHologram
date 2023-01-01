@@ -56,7 +56,7 @@ public class HologramManager {
             existingHologram.init();
             existingHologram.setLocation(location);
         } else {
-            handler.createHologram(name, location);
+            handler.createHologram(name, location).init();
         }
         return true;
     }
