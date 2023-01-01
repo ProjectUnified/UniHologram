@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A simple hologram for features that only support updating the whole hologram
@@ -22,6 +23,10 @@ public abstract class SimpleHologram<T> implements Hologram<T> {
         this.lines = new ArrayList<>();
     }
 
+    private void update() {
+        setLines(lines);
+    }
+
     @Override
     public @NotNull List<HologramLine> getLines() {
         return Collections.unmodifiableList(lines);
@@ -30,25 +35,33 @@ public abstract class SimpleHologram<T> implements Hologram<T> {
     @Override
     public void addLine(@NotNull HologramLine line) {
         lines.add(line);
-        setLines(lines);
+        update();
     }
 
     @Override
     public void setLine(int index, @NotNull HologramLine line) {
         lines.set(index, line);
-        setLines(lines);
+        update();
     }
 
     @Override
     public void insertLine(int index, @NotNull HologramLine line) {
         lines.add(index, line);
-        setLines(lines);
+        update();
     }
 
     @Override
     public void removeLine(int index) {
         lines.remove(index);
-        setLines(lines);
+        update();
+    }
+
+    @Override
+    public Optional<HologramLine> getLine(int index) {
+        if (index < 0 || index >= lines.size()) {
+            return Optional.empty();
+        }
+        return Optional.of(lines.get(index));
     }
 
     @Override
