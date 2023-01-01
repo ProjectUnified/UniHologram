@@ -96,6 +96,13 @@ public interface Hologram<T> {
     void clear();
 
     /**
+     * Check if the hologram is initialized
+     *
+     * @return true if it is
+     */
+    boolean isInitialized();
+
+    /**
      * Get the location of the hologram
      *
      * @return the location

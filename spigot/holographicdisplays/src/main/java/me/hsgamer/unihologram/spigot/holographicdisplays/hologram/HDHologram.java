@@ -152,6 +152,11 @@ public class HDHologram implements CommonSpigotHologram {
     }
 
     @Override
+    public boolean isInitialized() {
+        return hologram != null;
+    }
+
+    @Override
     public Location getLocation() {
         checkHologramInitialized();
         return hologram.getPosition().toLocation();
