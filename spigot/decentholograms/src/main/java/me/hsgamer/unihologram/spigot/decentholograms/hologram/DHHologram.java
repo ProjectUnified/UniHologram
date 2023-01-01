@@ -133,13 +133,17 @@ public class DHHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public HologramLine getLine(int index) {
+    public Optional<HologramLine> getLine(int index) {
         checkHologramInitialized();
         HologramPage page = hologram.getPage(0);
         if (page == null) {
-            throw new IndexOutOfBoundsException("Page 0 is not found");
+            return Optional.empty();
         }
-        return fromDHLine(page.getLine(index));
+        eu.decentsoftware.holograms.api.holograms.HologramLine line = page.getLine(index);
+        if (line == null) {
+            return Optional.empty();
+        }
+        return Optional.of(fromDHLine(line));
     }
 
     @Override

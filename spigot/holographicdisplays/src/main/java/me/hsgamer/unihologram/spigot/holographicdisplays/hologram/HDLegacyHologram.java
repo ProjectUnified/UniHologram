@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -111,9 +112,12 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     }
 
     @Override
-    public HologramLine getLine(int index) {
+    public Optional<HologramLine> getLine(int index) {
         checkHologramInitialized();
-        return fromHDLine(hologram.getLine(index));
+        if (index < 0 || index >= hologram.size()) {
+            return Optional.empty();
+        }
+        return Optional.of(fromHDLine(hologram.getLine(index)));
     }
 
     @Override

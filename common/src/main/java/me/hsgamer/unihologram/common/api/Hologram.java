@@ -3,6 +3,7 @@ package me.hsgamer.unihologram.common.api;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A hologram
@@ -63,8 +64,8 @@ public interface Hologram<T> {
      * @param index the index
      * @return the line
      */
-    default HologramLine getLine(int index) {
-        return getLines().get(index);
+    default Optional<HologramLine> getLine(int index) {
+        return 0 <= index && index < getLines().size() ? Optional.of(getLines().get(index)) : Optional.empty();
     }
 
     /**
