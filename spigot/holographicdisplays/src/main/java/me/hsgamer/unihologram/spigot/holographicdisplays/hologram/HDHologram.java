@@ -4,12 +4,15 @@ import com.google.common.base.Preconditions;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.HologramLines;
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.EmptyHologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
+import me.hsgamer.unihologram.spigot.common.hologram.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +25,7 @@ import java.util.function.Supplier;
 /**
  * The hologram for HolographicDisplays
  */
-public class HDHologram implements CommonSpigotHologram {
+public class HDHologram implements CommonSpigotHologram, PlayerVisibility {
     private final String name;
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
@@ -166,5 +169,35 @@ public class HDHologram implements CommonSpigotHologram {
     public void setLocation(Location location) {
         checkHologramInitialized();
         hologram.setPosition(location);
+    }
+
+    @Override
+    public boolean isVisible(Player player) {
+        checkHologramInitialized();
+        return hologram.getVisibilitySettings().isVisibleTo(player);
+    }
+
+    @Override
+    public void showAll() {
+        checkHologramInitialized();
+        hologram.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+    }
+
+    @Override
+    public void hideAll() {
+        checkHologramInitialized();
+        hologram.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+    }
+
+    @Override
+    public void showTo(Player player) {
+        checkHologramInitialized();
+        hologram.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+    }
+
+    @Override
+    public void hideTo(Player player) {
+        checkHologramInitialized();
+        hologram.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
     }
 }

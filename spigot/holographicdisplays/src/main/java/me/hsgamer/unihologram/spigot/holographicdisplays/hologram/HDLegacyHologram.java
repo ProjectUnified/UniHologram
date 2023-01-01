@@ -9,8 +9,10 @@ import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.EmptyHologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
+import me.hsgamer.unihologram.spigot.common.hologram.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +26,7 @@ import java.util.function.Supplier;
  * The legacy hologram for HolographicDisplays
  */
 @SuppressWarnings("deprecation")
-public class HDLegacyHologram implements CommonSpigotHologram {
+public class HDLegacyHologram implements CommonSpigotHologram, PlayerVisibility {
     private final String name;
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
@@ -163,5 +165,35 @@ public class HDLegacyHologram implements CommonSpigotHologram {
     public void setLocation(Location location) {
         checkHologramInitialized();
         hologram.teleport(location);
+    }
+
+    @Override
+    public boolean isVisible(Player player) {
+        checkHologramInitialized();
+        return hologram.getVisibilityManager().isVisibleTo(player);
+    }
+
+    @Override
+    public void showAll() {
+        checkHologramInitialized();
+        hologram.getVisibilityManager().setVisibleByDefault(true);
+    }
+
+    @Override
+    public void hideAll() {
+        checkHologramInitialized();
+        hologram.getVisibilityManager().setVisibleByDefault(false);
+    }
+
+    @Override
+    public void showTo(Player player) {
+        checkHologramInitialized();
+        hologram.getVisibilityManager().showTo(player);
+    }
+
+    @Override
+    public void hideTo(Player player) {
+        checkHologramInitialized();
+        hologram.getVisibilityManager().hideTo(player);
     }
 }

@@ -8,9 +8,11 @@ import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
+import me.hsgamer.unihologram.spigot.common.hologram.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for DecentHolograms
  */
-public class DHHologram implements CommonSpigotHologram {
+public class DHHologram implements CommonSpigotHologram, PlayerVisibility {
     private static final boolean IS_FLAT;
 
     static {
@@ -189,5 +191,35 @@ public class DHHologram implements CommonSpigotHologram {
     public void setLocation(Location location) {
         checkHologramInitialized();
         DHAPI.moveHologram(hologram, location);
+    }
+
+    @Override
+    public boolean isVisible(Player player) {
+        checkHologramInitialized();
+        return hologram.isVisible(player);
+    }
+
+    @Override
+    public void showAll() {
+        checkHologramInitialized();
+        hologram.showAll();
+    }
+
+    @Override
+    public void hideAll() {
+        checkHologramInitialized();
+        hologram.hideAll();
+    }
+
+    @Override
+    public void showTo(Player player) {
+        checkHologramInitialized();
+        hologram.show(player, 0);
+    }
+
+    @Override
+    public void hideTo(Player player) {
+        checkHologramInitialized();
+        hologram.hide(player);
     }
 }
