@@ -34,6 +34,11 @@ public class NoneHologram<T> extends SimpleHologram<T> {
     }
 
     @Override
+    public boolean isInitialized() {
+        return true;
+    }
+
+    @Override
     public T getLocation() {
         return location;
     }
