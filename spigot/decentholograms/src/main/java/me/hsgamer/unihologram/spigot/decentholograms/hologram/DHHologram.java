@@ -8,7 +8,7 @@ import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
-import me.hsgamer.unihologram.spigot.common.hologram.PlayerVisibility;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
 import org.bukkit.Location;
@@ -194,9 +194,9 @@ public class DHHologram implements CommonSpigotHologram, PlayerVisibility {
     }
 
     @Override
-    public boolean isVisible(Player player) {
+    public boolean isVisible(Player viewer) {
         checkHologramInitialized();
-        return hologram.isVisible(player);
+        return hologram.isVisible(viewer);
     }
 
     @Override
@@ -212,14 +212,14 @@ public class DHHologram implements CommonSpigotHologram, PlayerVisibility {
     }
 
     @Override
-    public void showTo(Player player) {
+    public void showTo(Player viewer) {
         checkHologramInitialized();
-        hologram.show(player, 0);
+        hologram.show(viewer, 0);
     }
 
     @Override
-    public void hideTo(Player player) {
+    public void hideTo(Player viewer) {
         checkHologramInitialized();
-        hologram.hide(player);
+        hologram.hide(viewer);
     }
 }

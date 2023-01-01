@@ -9,7 +9,7 @@ import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.EmptyHologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
-import me.hsgamer.unihologram.spigot.common.hologram.PlayerVisibility;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -172,9 +172,9 @@ public class HDHologram implements CommonSpigotHologram, PlayerVisibility {
     }
 
     @Override
-    public boolean isVisible(Player player) {
+    public boolean isVisible(Player viewer) {
         checkHologramInitialized();
-        return hologram.getVisibilitySettings().isVisibleTo(player);
+        return hologram.getVisibilitySettings().isVisibleTo(viewer);
     }
 
     @Override
@@ -190,14 +190,14 @@ public class HDHologram implements CommonSpigotHologram, PlayerVisibility {
     }
 
     @Override
-    public void showTo(Player player) {
+    public void showTo(Player viewer) {
         checkHologramInitialized();
-        hologram.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+        hologram.getVisibilitySettings().setIndividualVisibility(viewer, VisibilitySettings.Visibility.VISIBLE);
     }
 
     @Override
-    public void hideTo(Player player) {
+    public void hideTo(Player viewer) {
         checkHologramInitialized();
-        hologram.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
+        hologram.getVisibilitySettings().setIndividualVisibility(viewer, VisibilitySettings.Visibility.HIDDEN);
     }
 }
