@@ -4,7 +4,6 @@ me.hsgamer.unihologram.common.hologram
 me.hsgamer.unihologram.common.line
 me.hsgamer.unihologram.common.provider
 me.hsgamer.unihologram.spigot
-me.hsgamer.unihologram.spigot.common.hologram
 me.hsgamer.unihologram.spigot.common.hologram.extra
 me.hsgamer.unihologram.spigot.common.line
 me.hsgamer.unihologram.spigot.decentholograms.hologram
@@ -14,3 +13,5 @@ me.hsgamer.unihologram.spigot.holographicdisplays.provider
 me.hsgamer.unihologram.spigot.test
 me.hsgamer.unihologram.spigot.test.command
 me.hsgamer.unihologram.spigot.test.command.subcommand
+me.hsgamer.unihologram.spigot.vanilla.hologram
+me.hsgamer.unihologram.spigot.vanilla.provider
