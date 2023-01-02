@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public abstract class HologramCommand extends SubCommand {
     protected final UniHologramPlugin plugin;
@@ -33,7 +34,7 @@ public abstract class HologramCommand extends SubCommand {
             case "text":
                 return new TextHologramLine(split.length == 1 ? "" : split[1]);
             case "item":
-                return new ItemHologramLine(new ItemStack(Material.getMaterial(split.length == 1 ? "STONE" : split[1])));
+                return new ItemHologramLine(new ItemStack(Optional.ofNullable(Material.getMaterial(split.length == 1 ? "" : split[1].trim().toUpperCase())).orElse(Material.STONE)));
             case "empty":
                 return new EmptyHologramLine();
             default:
