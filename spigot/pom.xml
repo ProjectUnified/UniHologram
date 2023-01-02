@@ -13,9 +13,9 @@
         <module>common</module>
         <module>decentholograms</module>
         <module>holographicdisplays</module>
+        <module>vanilla</module>
         <module>bundle</module>
         <module>test</module>
-        <module>vanilla</module>
     </modules>
 
     <artifactId>uni-hologram-spigot</artifactId>
