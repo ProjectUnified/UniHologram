@@ -113,6 +113,7 @@ public abstract class SimpleHologram<T> implements Hologram<T> {
     public void clear() {
         if (initialized.compareAndSet(true, false)) {
             clearHologram();
+            lines.clear();
         }
     }
 

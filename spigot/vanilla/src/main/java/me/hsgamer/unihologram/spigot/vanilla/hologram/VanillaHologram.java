@@ -11,7 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,25 +53,28 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
             currentLocation = currentLocation.clone().add(0, -0.27, 0);
             Entity entity;
             if (line instanceof ItemHologramLine && VERSION >= 10) {
-                ItemStack itemStack = ((ItemHologramLine) line).getContent();
-                entity = world.dropItem(currentLocation, itemStack);
+                currentLocation = currentLocation.clone().add(0, -0.4, 0);
+                Location itemLocation = currentLocation.clone().add(0, 2.2, 0);
+                Item item = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent());
+                entity = item;
                 entity.setGravity(false);
+                entity.setVelocity(new Vector(0, 0, 0));
+                entity.teleport(itemLocation);
                 entity.setInvulnerable(true);
-                Item item = (Item) entity;
                 item.setPickupDelay(Integer.MAX_VALUE);
                 item.setCustomNameVisible(false);
             } else {
-                entity = world.spawn(currentLocation, ArmorStand.class);
-                ArmorStand armorStand = (ArmorStand) entity;
+                ArmorStand armorStand = world.spawn(currentLocation, ArmorStand.class);
+                entity = armorStand;
                 armorStand.setGravity(false);
                 armorStand.setVisible(false);
                 armorStand.setCustomNameVisible(true);
                 armorStand.setInvulnerable(true);
-                if (line instanceof TextHologramLine) {
-                    armorStand.setCustomName(colorize(((TextHologramLine) line).getContent()));
-                } else {
-                    armorStand.setCustomName(line.getRawContent());
-                }
+                armorStand.setCustomName(
+                        line instanceof TextHologramLine
+                                ? colorize(((TextHologramLine) line).getContent())
+                                : line.getRawContent()
+                );
             }
             entities.add(entity);
         }
