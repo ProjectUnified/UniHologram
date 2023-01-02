@@ -2,16 +2,15 @@ package me.hsgamer.unihologram.spigot;
 
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramProvider;
-import me.hsgamer.unihologram.common.hologram.NoneHologram;
 import me.hsgamer.unihologram.spigot.decentholograms.provider.DHHologramProvider;
 import me.hsgamer.unihologram.spigot.holographicdisplays.provider.HDHologramProvider;
+import me.hsgamer.unihologram.spigot.vanilla.provider.VanillaHologramProvider;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -32,27 +31,7 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
         } else if (HDHologramProvider.isAvailable()) {
             provider = new HDHologramProvider(plugin);
         } else {
-            provider = new HologramProvider<Location>() {
-                @Override
-                public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
-                    return new NoneHologram<>(name, location);
-                }
-
-                @Override
-                public Optional<Hologram<Location>> getHologram(@NotNull String name) {
-                    return Optional.empty();
-                }
-
-                @Override
-                public Collection<Hologram<Location>> getAllHolograms() {
-                    return Collections.emptySet();
-                }
-
-                @Override
-                public boolean isLocal() {
-                    return true;
-                }
-            };
+            provider = new VanillaHologramProvider();
         }
     }
 

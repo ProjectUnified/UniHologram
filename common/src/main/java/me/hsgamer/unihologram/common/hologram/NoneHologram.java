@@ -11,7 +11,7 @@ public class NoneHologram<T> extends SimpleHologram<T> {
     }
 
     @Override
-    protected void update() {
+    protected void updateHologram() {
         // EMPTY
     }
 

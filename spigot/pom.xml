@@ -15,6 +15,7 @@
         <module>holographicdisplays</module>
         <module>bundle</module>
         <module>test</module>
+        <module>vanilla</module>
     </modules>
 
     <artifactId>uni-hologram-spigot</artifactId>

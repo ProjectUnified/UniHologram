@@ -1,15 +1,13 @@
-package me.hsgamer.unihologram.spigot.common.hologram;
+package me.hsgamer.unihologram.spigot.common.hologram.extra;
 
-import me.hsgamer.unihologram.common.api.Hologram;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * The common hologram for Spigot
  */
-public interface CommonSpigotHologram extends Hologram<Location> {
+public interface Colored {
     @NotNull
     default String colorize(@Nullable String string) {
         return string == null ? "" : ChatColor.translateAlternateColorCodes('&', string);

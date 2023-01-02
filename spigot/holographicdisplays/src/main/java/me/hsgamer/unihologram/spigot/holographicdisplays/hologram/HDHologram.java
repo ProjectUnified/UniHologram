@@ -8,7 +8,7 @@ import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.EmptyHologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
-import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import org.bukkit.Location;
@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 /**
  * The hologram for HolographicDisplays
  */
-public class HDHologram implements CommonSpigotHologram, PlayerVisibility {
+public class HDHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility, Colored {
     private final String name;
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;

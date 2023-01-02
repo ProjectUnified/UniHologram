@@ -7,7 +7,7 @@ import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
-import me.hsgamer.unihologram.spigot.common.hologram.CommonSpigotHologram;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for DecentHolograms
  */
-public class DHHologram implements CommonSpigotHologram, PlayerVisibility {
+public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility, Colored {
     private static final boolean IS_FLAT;
 
     static {
