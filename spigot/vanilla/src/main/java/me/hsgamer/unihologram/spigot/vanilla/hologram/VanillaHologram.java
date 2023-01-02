@@ -35,6 +35,12 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
 
     private final List<Entity> entities = new ArrayList<>();
 
+    /**
+     * Create a new hologram
+     *
+     * @param name     the name of the hologram
+     * @param location the location of the hologram
+     */
     public VanillaHologram(String name, Location location) {
         super(name, location);
     }
