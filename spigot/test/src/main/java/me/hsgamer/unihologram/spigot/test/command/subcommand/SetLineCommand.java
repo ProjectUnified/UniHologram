@@ -1,7 +1,6 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,7 @@ public class SetLineCommand extends HologramCommand {
             return;
         }
         String content = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-        hologram.setLine(line, new TextHologramLine(content));
+        hologram.setLine(line, toLine(content));
         sender.sendMessage("Set line " + line + " to " + content);
     }
 
