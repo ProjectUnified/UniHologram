@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * A simple hologram for features that only support updating the whole hologram
@@ -15,21 +14,39 @@ import java.util.Optional;
  * @param <T> the type of the location
  */
 public abstract class SimpleHologram<T> implements Hologram<T> {
-    private final List<HologramLine> lines;
-    private final String name;
+    /**
+     * The current lines
+     */
+    protected List<HologramLine> lines;
+    /**
+     * The name of the hologram
+     */
+    protected String name;
+    /**
+     * The location of the hologram
+     */
+    protected T location;
 
-    protected SimpleHologram(String name) {
+    protected SimpleHologram(String name, T location) {
         this.name = name;
+        this.location = location;
         this.lines = new ArrayList<>();
     }
 
-    private void update() {
-        setLines(lines);
-    }
+    /**
+     * Update the hologram
+     */
+    protected abstract void update();
 
     @Override
     public @NotNull List<HologramLine> getLines() {
         return Collections.unmodifiableList(lines);
+    }
+
+    @Override
+    public void setLines(@NotNull List<HologramLine> lines) {
+        this.lines = new ArrayList<>(lines);
+        update();
     }
 
     @Override
@@ -57,15 +74,18 @@ public abstract class SimpleHologram<T> implements Hologram<T> {
     }
 
     @Override
-    public Optional<HologramLine> getLine(int index) {
-        if (index < 0 || index >= lines.size()) {
-            return Optional.empty();
-        }
-        return Optional.of(lines.get(index));
+    public String getName() {
+        return name;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public T getLocation() {
+        return location;
+    }
+
+    @Override
+    public void setLocation(T location) {
+        this.location = location;
+        update();
     }
 }
