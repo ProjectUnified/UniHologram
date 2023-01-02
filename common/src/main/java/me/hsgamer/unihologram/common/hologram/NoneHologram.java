@@ -16,17 +16,12 @@ public class NoneHologram<T> extends SimpleHologram<T> {
     }
 
     @Override
-    public void init() {
+    protected void initHologram() {
         // EMPTY
     }
 
     @Override
-    public void clear() {
+    protected void clearHologram() {
         // EMPTY
-    }
-
-    @Override
-    public boolean isInitialized() {
-        return true;
     }
 }
