@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The hologram for ProtocolLib
  */
-public final class ProtocoLlibHologram extends SimpleHologram<Location> implements PlayerVisibility, Colored {
+public final class ProtocolLibHologram extends SimpleHologram<Location> implements PlayerVisibility, Colored {
 
     @NotNull
     private final Plugin plugin;
@@ -23,7 +23,7 @@ public final class ProtocoLlibHologram extends SimpleHologram<Location> implemen
      * @param name     the name
      * @param location the location
      */
-    public ProtocoLlibHologram(@NotNull final Plugin plugin, @NotNull final String name, @NotNull final Location location) {
+    public ProtocolLibHologram(@NotNull final Plugin plugin, @NotNull final String name, @NotNull final Location location) {
         super(name, location);
         this.plugin = plugin;
     }
