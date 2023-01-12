@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class CountLineCommand extends HologramCommand {
     public CountLineCommand(UniHologramPlugin plugin) {
-        super(plugin, "countline", "Count lines of a hologram", "/unihologram countline <hologram>", "unihologram.countline", true);
+        super(plugin, "countline", "Count lines of a hologram", "/<label> countline <hologram>", "unihologram.countline", true);
     }
 
     @Override

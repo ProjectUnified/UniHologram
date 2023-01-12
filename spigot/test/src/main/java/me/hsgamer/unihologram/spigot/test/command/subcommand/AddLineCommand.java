@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class AddLineCommand extends HologramCommand {
     public AddLineCommand(UniHologramPlugin plugin) {
-        super(plugin, "addline", "Add a new line", "/unihologram addline <hologram> <content>", "unihologram.addline", true);
+        super(plugin, "addline", "Add a new line", "/<label> addline <hologram> <content>", "unihologram.addline", true);
     }
 
     @Override

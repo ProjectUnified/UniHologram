@@ -10,7 +10,7 @@ public class CreateCommand extends SubCommand {
     private final UniHologramPlugin plugin;
 
     public CreateCommand(UniHologramPlugin plugin) {
-        super("create", "Create a new hologram", "/unihologram create <name>", "unihologram.create", false);
+        super("create", "Create a new hologram", "/<label> create <name>", "unihologram.create", false);
         this.plugin = plugin;
     }
 

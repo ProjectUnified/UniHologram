@@ -5,26 +5,14 @@ import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
 import me.hsgamer.unihologram.spigot.test.command.subcommand.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class MainCommand extends Command {
-    private final SubCommandManager subCommandManager;
+    private final SubCommandManager subCommandManager = new SubCommandManager();
 
     public MainCommand(UniHologramPlugin plugin) {
         super("unihologram");
-        subCommandManager = new SubCommandManager() {
-            @Override
-            public void sendHelpMessage(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String... strings) {
-                subCommandManager.getSubcommands().values().forEach(subCommand -> commandSender.sendMessage(subCommand.getUsage()));
-            }
-
-            @Override
-            public void sendArgNotFoundMessage(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String... strings) {
-                commandSender.sendMessage("Arg not found");
-            }
-        };
         subCommandManager.registerSubcommand(new CreateCommand(plugin));
         subCommandManager.registerSubcommand(new DeleteCommand(plugin));
         subCommandManager.registerSubcommand(new AddLineCommand(plugin));

@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class InsertLineCommand extends HologramCommand {
     public InsertLineCommand(UniHologramPlugin plugin) {
-        super(plugin, "insertline", "Insert a line", "/unihologram insertline <hologram> <line> <content>", "unihologram.insertline", true);
+        super(plugin, "insertline", "Insert a line", "/<label> insertline <hologram> <line> <content>", "unihologram.insertline", true);
     }
 
     @Override
