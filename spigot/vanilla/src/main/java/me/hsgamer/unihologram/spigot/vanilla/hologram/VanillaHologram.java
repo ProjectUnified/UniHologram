@@ -54,7 +54,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
             return;
         }
 
-        Location currentLocation = location.clone();
+        Location currentLocation = location.clone().add(0, -2, 0);
         for (HologramLine line : lines) {
             currentLocation = currentLocation.clone().add(0, -0.27, 0);
             Entity entity;
