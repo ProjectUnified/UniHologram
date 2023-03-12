@@ -1,0 +1,9 @@
+main: me.hsgamer.unihologram.spigot.plugin.UniHologramPlugin
+name: UniHologram
+version: "${project.version}"
+description: "${project.description}"
+author: HSGamer
+softdepend:
+  - DecentHolograms
+  - HolographicDisplays
+api-version: '1.13'
