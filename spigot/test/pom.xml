@@ -54,8 +54,9 @@
     <dependencies>
         <dependency>
             <groupId>me.hsgamer</groupId>
-            <artifactId>uni-hologram-spigot-bundle</artifactId>
+            <artifactId>uni-hologram-spigot-plugin</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>

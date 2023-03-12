@@ -6,7 +6,7 @@ import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.EmptyHologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -18,9 +18,9 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public abstract class HologramCommand extends SubCommand {
-    protected final UniHologramPlugin plugin;
+    protected final UniHologramTest plugin;
 
-    protected HologramCommand(UniHologramPlugin plugin, @NotNull String name, @NotNull String description, @NotNull String usage, @Nullable String permission, boolean consoleAllowed) {
+    protected HologramCommand(UniHologramTest plugin, @NotNull String name, @NotNull String description, @NotNull String usage, @Nullable String permission, boolean consoleAllowed) {
         super(name, description, usage, permission, consoleAllowed);
         this.plugin = plugin;
     }

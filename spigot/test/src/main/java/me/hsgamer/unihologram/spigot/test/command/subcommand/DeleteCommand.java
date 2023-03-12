@@ -1,12 +1,12 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 public class DeleteCommand extends HologramCommand {
-    public DeleteCommand(UniHologramPlugin plugin) {
+    public DeleteCommand(UniHologramTest plugin) {
         super(plugin, "delete", "Delete a hologram", "/<label> delete <name>", "unihologram.delete", true);
     }
 

@@ -1,7 +1,7 @@
 package me.hsgamer.unihologram.spigot.test.command;
 
 import me.hsgamer.hscore.bukkit.command.sub.SubCommandManager;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import me.hsgamer.unihologram.spigot.test.command.subcommand.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,7 @@ import java.util.List;
 public class MainCommand extends Command {
     private final SubCommandManager subCommandManager = new SubCommandManager();
 
-    public MainCommand(UniHologramPlugin plugin) {
+    public MainCommand(UniHologramTest plugin) {
         super("unihologram");
         subCommandManager.registerSubcommand(new CreateCommand(plugin));
         subCommandManager.registerSubcommand(new DeleteCommand(plugin));

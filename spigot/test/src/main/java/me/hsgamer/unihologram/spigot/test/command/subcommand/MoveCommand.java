@@ -1,13 +1,13 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MoveCommand extends HologramCommand {
-    public MoveCommand(UniHologramPlugin plugin) {
+    public MoveCommand(UniHologramTest plugin) {
         super(plugin, "move", "Move the hologram", "/<label> move <hologram>", "unihologram.move", false);
     }
 

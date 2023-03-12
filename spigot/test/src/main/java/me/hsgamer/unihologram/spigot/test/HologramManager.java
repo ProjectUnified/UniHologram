@@ -2,7 +2,9 @@ package me.hsgamer.unihologram.spigot.test;
 
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.spigot.SpigotHologramProvider;
+import me.hsgamer.unihologram.spigot.plugin.UniHologramPlugin;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,8 +14,8 @@ public class HologramManager {
     private final SpigotHologramProvider provider;
     private final HologramHandler handler;
 
-    public HologramManager(UniHologramPlugin plugin) {
-        this.provider = new SpigotHologramProvider(plugin);
+    public HologramManager() {
+        this.provider = JavaPlugin.getPlugin(UniHologramPlugin.class).getProvider();
 
         HologramHandler hologramHandler;
         if (provider.isLocal()) {

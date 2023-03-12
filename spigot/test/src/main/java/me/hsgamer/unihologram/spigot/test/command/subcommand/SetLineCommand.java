@@ -1,14 +1,14 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
 
 public class SetLineCommand extends HologramCommand {
-    public SetLineCommand(UniHologramPlugin plugin) {
+    public SetLineCommand(UniHologramTest plugin) {
         super(plugin, "setline", "Set a line", "/<label> setline <hologram> <line> <content>", "unihologram.setline", true);
     }
 

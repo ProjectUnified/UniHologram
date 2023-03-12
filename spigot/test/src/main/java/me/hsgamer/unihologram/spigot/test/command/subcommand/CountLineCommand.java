@@ -1,12 +1,12 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 public class CountLineCommand extends HologramCommand {
-    public CountLineCommand(UniHologramPlugin plugin) {
+    public CountLineCommand(UniHologramTest plugin) {
         super(plugin, "countline", "Count lines of a hologram", "/<label> countline <hologram>", "unihologram.countline", true);
     }
 

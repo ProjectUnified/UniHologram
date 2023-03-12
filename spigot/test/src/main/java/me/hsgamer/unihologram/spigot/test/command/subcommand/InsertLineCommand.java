@@ -1,14 +1,14 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
 
 public class InsertLineCommand extends HologramCommand {
-    public InsertLineCommand(UniHologramPlugin plugin) {
+    public InsertLineCommand(UniHologramTest plugin) {
         super(plugin, "insertline", "Insert a line", "/<label> insertline <hologram> <line> <content>", "unihologram.insertline", true);
     }
 

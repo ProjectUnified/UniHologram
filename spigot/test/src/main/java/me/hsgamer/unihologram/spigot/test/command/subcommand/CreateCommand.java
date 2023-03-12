@@ -1,15 +1,15 @@
 package me.hsgamer.unihologram.spigot.test.command.subcommand;
 
 import me.hsgamer.hscore.bukkit.command.sub.SubCommand;
-import me.hsgamer.unihologram.spigot.test.UniHologramPlugin;
+import me.hsgamer.unihologram.spigot.test.UniHologramTest;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class CreateCommand extends SubCommand {
-    private final UniHologramPlugin plugin;
+    private final UniHologramTest plugin;
 
-    public CreateCommand(UniHologramPlugin plugin) {
+    public CreateCommand(UniHologramTest plugin) {
         super("create", "Create a new hologram", "/<label> create <name>", "unihologram.create", false);
         this.plugin = plugin;
     }
