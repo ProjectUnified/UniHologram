@@ -65,7 +65,11 @@ public interface Hologram<T> {
      * @return the line
      */
     default Optional<HologramLine> getLine(int index) {
-        return 0 <= index && index < getLines().size() ? Optional.of(getLines().get(index)) : Optional.empty();
+        List<HologramLine> lines = getLines();
+        if (index < 0 || index >= lines.size()) {
+            return Optional.empty();
+        }
+        return Optional.of(lines.get(index));
     }
 
     /**
