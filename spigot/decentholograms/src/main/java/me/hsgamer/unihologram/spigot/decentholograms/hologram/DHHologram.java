@@ -6,6 +6,7 @@ import eu.decentsoftware.holograms.api.holograms.Hologram;
 import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import me.hsgamer.unihologram.common.api.HologramLine;
+import me.hsgamer.unihologram.common.api.PagedHologram;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for DecentHolograms
  */
-public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility, Colored {
+public class DHHologram implements PagedHologram<Location>, PlayerVisibility, Colored {
     private static final boolean IS_FLAT;
 
     static {
@@ -94,64 +95,64 @@ public class DHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
     }
 
     @Override
-    public @NotNull List<HologramLine> getLines() {
+    public int getPages() {
         checkHologramInitialized();
-        HologramPage page = hologram.getPage(0);
-        if (page == null) {
+        return hologram.getPages().size();
+    }
+
+    @Override
+    public @NotNull List<HologramLine> getLines(int page) {
+        checkHologramInitialized();
+        HologramPage hologramPage = hologram.getPage(page);
+        if (hologramPage == null) {
             return Collections.emptyList();
         }
-        return page.getLines().stream().map(this::fromDHLine).collect(Collectors.toList());
+        return hologramPage.getLines().stream().map(this::fromDHLine).collect(Collectors.toList());
     }
 
     @Override
-    public void setLines(@NotNull List<HologramLine> lines) {
+    public void setLines(int page, @NotNull List<HologramLine> lines) {
         checkHologramInitialized();
         List<String> content = lines.stream().map(this::toDHContent).collect(Collectors.toList());
-        DHAPI.setHologramLines(hologram, content);
+        DHAPI.setHologramLines(hologram, page, content);
     }
 
     @Override
-    public void addLine(@NotNull HologramLine line) {
+    public void addLine(int page, @NotNull HologramLine line) {
         checkHologramInitialized();
-        DHAPI.addHologramLine(hologram, toDHContent(line));
+        DHAPI.addHologramLine(hologram, page, toDHContent(line));
     }
 
     @Override
-    public void insertLine(int index, @NotNull HologramLine line) {
+    public void insertLine(int page, int index, @NotNull HologramLine line) {
         checkHologramInitialized();
-        DHAPI.insertHologramLine(hologram, index, toDHContent(line));
+        DHAPI.insertHologramLine(hologram, page, index, toDHContent(line));
     }
 
     @Override
-    public void setLine(int index, @NotNull HologramLine line) {
+    public void setLine(int page, int index, @NotNull HologramLine line) {
         checkHologramInitialized();
-        DHAPI.setHologramLine(hologram, index, toDHContent(line));
+        DHAPI.setHologramLine(hologram, page, index, toDHContent(line));
     }
 
     @Override
-    public void removeLine(int index) {
+    public void removeLine(int page, int index) {
         checkHologramInitialized();
-        DHAPI.removeHologramLine(hologram, index);
+        DHAPI.removeHologramLine(hologram, page, index);
     }
 
     @Override
-    public Optional<HologramLine> getLine(int index) {
+    public Optional<HologramLine> getLine(int page, int index) {
         checkHologramInitialized();
-        HologramPage page = hologram.getPage(0);
-        if (page == null) {
+        HologramPage hologramPage = hologram.getPage(page);
+        if (hologramPage == null) {
             return Optional.empty();
         }
-        eu.decentsoftware.holograms.api.holograms.HologramLine line = page.getLine(index);
+        eu.decentsoftware.holograms.api.holograms.HologramLine line = hologramPage.getLine(index);
         if (line == null) {
             return Optional.empty();
         }
         return Optional.of(fromDHLine(line));
-    }
-
-    @Override
-    public int size() {
-        checkHologramInitialized();
-        return hologram.size();
     }
 
     @Override
