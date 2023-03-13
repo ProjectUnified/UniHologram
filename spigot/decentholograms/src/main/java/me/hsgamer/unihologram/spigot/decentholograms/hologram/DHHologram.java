@@ -9,6 +9,7 @@ import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.api.PagedHologram;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerPage;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for DecentHolograms
  */
-public class DHHologram implements PagedHologram<Location>, PlayerVisibility, Colored {
+public class DHHologram implements PagedHologram<Location>, PlayerPage, PlayerVisibility, Colored {
     private static final boolean IS_FLAT;
 
     static {
@@ -222,5 +223,17 @@ public class DHHologram implements PagedHologram<Location>, PlayerVisibility, Co
     public void hideTo(Player viewer) {
         checkHologramInitialized();
         hologram.hide(viewer);
+    }
+
+    @Override
+    public void setPage(Player viewer, int page) {
+        checkHologramInitialized();
+        hologram.show(viewer, page);
+    }
+
+    @Override
+    public int getPage(Player viewer) {
+        checkHologramInitialized();
+        return hologram.getPlayerPage(viewer);
     }
 }
