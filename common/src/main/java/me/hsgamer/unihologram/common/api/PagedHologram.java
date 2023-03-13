@@ -127,7 +127,7 @@ public interface PagedHologram<T> extends Hologram<T> {
 
     @Override
     default void removeLine(int index) {
-        removeLine(0, index);
+        removeLine(getFirstPage(), index);
     }
 
     @Override
