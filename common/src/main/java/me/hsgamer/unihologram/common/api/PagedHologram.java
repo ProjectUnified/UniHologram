@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * An extra interface for {@link Hologram} to support multiple pages
+ * A {@link Hologram} that supports multiple pages
  *
  * @param <T> the type of the location
  */
