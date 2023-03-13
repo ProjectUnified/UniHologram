@@ -1,7 +1,7 @@
 package me.hsgamer.unihologram.common.api.extra;
 
 /**
- * An extra for {@link me.hsgamer.unihologram.common.api.Hologram} to control the visibility of the hologram
+ * An extra interface for {@link me.hsgamer.unihologram.common.api.Hologram} to control the visibility of the hologram
  *
  * @param <T> the type of the viewer
  */
