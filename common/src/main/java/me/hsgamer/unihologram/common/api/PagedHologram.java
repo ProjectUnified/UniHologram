@@ -12,20 +12,13 @@ import java.util.Optional;
  */
 public interface PagedHologram<T> extends Hologram<T> {
     /**
-     * Get the current page.
-     * The page index starts at 0.
+     * Get the first page
      *
-     * @return the current page, starting at 0
+     * @return the first page
      */
-    int getCurrentPage();
-
-    /**
-     * Set the current page.
-     * The page index starts at 0.
-     *
-     * @param page the page, starting at 0
-     */
-    void setCurrentPage(int page);
+    default int getFirstPage() {
+        return 0;
+    }
 
     /**
      * Get the amount of pages
@@ -33,20 +26,6 @@ public interface PagedHologram<T> extends Hologram<T> {
      * @return the amount
      */
     int getPages();
-
-    /**
-     * Go to the next page
-     */
-    default void nextPage() {
-        setCurrentPage(getCurrentPage() + 1);
-    }
-
-    /**
-     * Go to the previous page
-     */
-    default void previousPage() {
-        setCurrentPage(getCurrentPage() - 1);
-    }
 
     /**
      * Get the lines of the hologram
@@ -128,41 +107,41 @@ public interface PagedHologram<T> extends Hologram<T> {
 
     @Override
     default @NotNull List<HologramLine> getLines() {
-        return getLines(getCurrentPage());
+        return getLines(getFirstPage());
     }
 
     @Override
     default void setLines(@NotNull List<HologramLine> lines) {
-        setLines(getCurrentPage(), lines);
+        setLines(getFirstPage(), lines);
     }
 
     @Override
     default void addLine(@NotNull HologramLine line) {
-        addLine(getCurrentPage(), line);
+        addLine(getFirstPage(), line);
     }
 
     @Override
     default void insertLine(int index, @NotNull HologramLine line) {
-        insertLine(getCurrentPage(), index, line);
+        insertLine(getFirstPage(), index, line);
     }
 
     @Override
     default void removeLine(int index) {
-        removeLine(getCurrentPage(), index);
+        removeLine(0, index);
     }
 
     @Override
     default void setLine(int index, @NotNull HologramLine line) {
-        setLine(getCurrentPage(), index, line);
+        setLine(getFirstPage(), index, line);
     }
 
     @Override
     default Optional<HologramLine> getLine(int index) {
-        return getLine(getCurrentPage(), index);
+        return getLine(getFirstPage(), index);
     }
 
     @Override
     default int size() {
-        return size(getCurrentPage());
+        return size(getFirstPage());
     }
 }
