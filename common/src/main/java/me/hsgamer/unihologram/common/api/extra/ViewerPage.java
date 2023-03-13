@@ -7,7 +7,8 @@ package me.hsgamer.unihologram.common.api.extra;
  */
 public interface ViewerPage<T> {
     /**
-     * Change the page for the viewer
+     * Change the page for the viewer.
+     * Implementations should check if the page is valid, and if not, change it to the closest valid page, or limit the page range from 0 to the maximum page (inclusive).
      *
      * @param viewer the viewer
      * @param page   the page
@@ -21,4 +22,22 @@ public interface ViewerPage<T> {
      * @return the current page
      */
     int getPage(T viewer);
+
+    /**
+     * Go to the next page
+     *
+     * @param viewer the viewer
+     */
+    default void nextPage(T viewer) {
+        setPage(viewer, getPage(viewer) + 1);
+    }
+
+    /**
+     * Go to the previous page
+     *
+     * @param viewer the viewer
+     */
+    default void previousPage(T viewer) {
+        setPage(viewer, getPage(viewer) - 1);
+    }
 }
