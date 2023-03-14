@@ -216,7 +216,7 @@ public class DHHologram implements PagedHologram<Location>, PlayerPage, PlayerVi
     @Override
     public void showTo(Player viewer) {
         checkHologramInitialized();
-        hologram.show(viewer, 0);
+        hologram.show(viewer, getFirstPage());
     }
 
     @Override
