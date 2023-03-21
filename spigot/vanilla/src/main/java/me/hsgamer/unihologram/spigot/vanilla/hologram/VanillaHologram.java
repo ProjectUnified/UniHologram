@@ -6,6 +6,7 @@ import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
@@ -94,11 +95,11 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
                 armorStand.setVisible(false);
                 armorStand.setCustomNameVisible(true);
                 armorStand.setInvulnerable(true);
-                armorStand.setCustomName(
-                        line instanceof TextHologramLine
-                                ? colorize(((TextHologramLine) line).getContent())
-                                : line.getRawContent()
-                );
+
+                String content = line instanceof TextHologramLine
+                        ? colorize(((TextHologramLine) line).getContent())
+                        : line.getRawContent();
+                armorStand.setCustomName(content.isEmpty() ? ChatColor.RESET.toString() : content);
             }
             entities.add(entity);
         }
@@ -133,5 +134,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         } else {
             Bukkit.getScheduler().runTask(plugin, runnable);
         }
+
+        linesRef.set(null);
     }
 }
