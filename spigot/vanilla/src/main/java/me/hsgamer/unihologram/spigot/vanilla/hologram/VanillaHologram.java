@@ -126,6 +126,12 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
             task.cancel();
             task = null;
         }
-        clearHologramEntity();
+
+        Runnable runnable = this::clearHologramEntity;
+        if (Bukkit.isPrimaryThread() || !plugin.isEnabled()) {
+            runnable.run();
+        } else {
+            Bukkit.getScheduler().runTask(plugin, runnable);
+        }
     }
 }
