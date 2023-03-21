@@ -65,7 +65,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
             return;
         }
 
-        clearHologram();
+        clearHologramEntity();
 
         World world = location.getWorld();
         if (world == null) {
