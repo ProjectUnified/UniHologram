@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -34,56 +35,64 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
     }
 
     private final List<Entity> entities = new ArrayList<>();
+    private final Object lock = new Object();
+    private final Plugin plugin;
 
     /**
      * Create a new hologram
      *
+     * @param plugin   the plugin
      * @param name     the name of the hologram
      * @param location the location of the hologram
      */
-    public VanillaHologram(String name, Location location) {
+    public VanillaHologram(Plugin plugin, String name, Location location) {
         super(name, location);
+        this.plugin = plugin;
     }
 
     @Override
     protected void updateHologram() {
-        clearHologram();
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            synchronized (lock) {
+                clearHologram();
 
-        World world = location.getWorld();
-        if (world == null) {
-            return;
-        }
+                World world = location.getWorld();
+                if (world == null) {
+                    return;
+                }
 
-        Location currentLocation = location.clone().add(0, -2, 0);
-        for (HologramLine line : lines) {
-            currentLocation = currentLocation.clone().add(0, -0.27, 0);
-            Entity entity;
-            if (line instanceof ItemHologramLine && VERSION >= 10) {
-                currentLocation = currentLocation.clone().add(0, -0.4, 0);
-                Location itemLocation = currentLocation.clone().add(0, 2.2, 0);
-                Item item = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent());
-                entity = item;
-                entity.setGravity(false);
-                entity.setVelocity(new Vector(0, 0, 0));
-                entity.teleport(itemLocation);
-                entity.setInvulnerable(true);
-                item.setPickupDelay(Integer.MAX_VALUE);
-                item.setCustomNameVisible(false);
-            } else {
-                ArmorStand armorStand = world.spawn(currentLocation, ArmorStand.class);
-                entity = armorStand;
-                armorStand.setGravity(false);
-                armorStand.setVisible(false);
-                armorStand.setCustomNameVisible(true);
-                armorStand.setInvulnerable(true);
-                armorStand.setCustomName(
-                        line instanceof TextHologramLine
-                                ? colorize(((TextHologramLine) line).getContent())
-                                : line.getRawContent()
-                );
+                Location currentLocation = location.clone().add(0, -2, 0);
+                for (HologramLine line : lines) {
+                    currentLocation = currentLocation.clone().add(0, -0.27, 0);
+                    Entity entity;
+                    if (line instanceof ItemHologramLine && VERSION >= 10) {
+                        currentLocation = currentLocation.clone().add(0, -0.4, 0);
+                        Location itemLocation = currentLocation.clone().add(0, 2.2, 0);
+                        Item item = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent());
+                        entity = item;
+                        entity.setGravity(false);
+                        entity.setVelocity(new Vector(0, 0, 0));
+                        entity.teleport(itemLocation);
+                        entity.setInvulnerable(true);
+                        item.setPickupDelay(Integer.MAX_VALUE);
+                        item.setCustomNameVisible(false);
+                    } else {
+                        ArmorStand armorStand = world.spawn(currentLocation, ArmorStand.class);
+                        entity = armorStand;
+                        armorStand.setGravity(false);
+                        armorStand.setVisible(false);
+                        armorStand.setCustomNameVisible(true);
+                        armorStand.setInvulnerable(true);
+                        armorStand.setCustomName(
+                                line instanceof TextHologramLine
+                                        ? colorize(((TextHologramLine) line).getContent())
+                                        : line.getRawContent()
+                        );
+                    }
+                    entities.add(entity);
+                }
             }
-            entities.add(entity);
-        }
+        });
     }
 
     @Override

@@ -31,7 +31,7 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
         } else if (HDHologramProvider.isAvailable()) {
             provider = new HDHologramProvider(plugin);
         } else {
-            provider = new VanillaHologramProvider();
+            provider = new VanillaHologramProvider(plugin);
         }
     }
 
