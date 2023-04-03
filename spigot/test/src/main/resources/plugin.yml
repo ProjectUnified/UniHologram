@@ -1,0 +1,6 @@
+main: me.hsgamer.unihologram.spigot.test.UniHologramTest
+name: UniHologramTest
+version: "${project.version}"
+depend:
+  - UniHologram
+api-version: '1.13'

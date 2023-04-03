@@ -12,7 +12,7 @@
     <artifactId>uni-hologram-spigot-plugin</artifactId>
 
     <properties>
-        <core.version>4.2.12</core.version>
+        <core.version>4.2.19</core.version>
     </properties>
 
     <build>
@@ -56,12 +56,6 @@
             <groupId>me.hsgamer</groupId>
             <artifactId>uni-hologram-spigot-bundle</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>plugin-annotations</artifactId>
-            <version>1.2.3-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
