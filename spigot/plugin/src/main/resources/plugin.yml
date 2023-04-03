@@ -7,3 +7,4 @@ softdepend:
   - DecentHolograms
   - HolographicDisplays
 api-version: '1.13'
+folia-supported: true
