@@ -64,13 +64,27 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         this.plugin = plugin;
     }
 
-    @Override
-    protected void initHologram() {
+    private void initTask() {
         if (IS_FOLIA) {
-            cancelTaskRunnable = Bukkit.getGlobalRegionScheduler().runAtFixedRate(plugin, s -> updateHologramEntity(), 5, 5)::cancel;
+            cancelTaskRunnable = Bukkit.getRegionScheduler().runAtFixedRate(plugin, location, s -> updateHologramEntity(), 5, 5)::cancel;
         } else {
             cancelTaskRunnable = Bukkit.getScheduler().runTaskTimer(plugin, this::updateHologramEntity, 5, 5)::cancel;
         }
+    }
+
+    @Override
+    protected void initHologram() {
+        initTask();
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        if (cancelTaskRunnable != null) {
+            cancelTaskRunnable.run();
+            cancelTaskRunnable = null;
+        }
+        super.setLocation(location);
+        initTask();
     }
 
     private void updateHologramEntity() {
@@ -142,10 +156,14 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         }
 
         Runnable runnable = this::clearHologramEntity;
-        if (IS_FOLIA || Bukkit.isPrimaryThread() || !plugin.isEnabled()) {
-            runnable.run();
+        if (plugin.isEnabled()) {
+            if (IS_FOLIA) {
+                Bukkit.getRegionScheduler().execute(plugin, location, runnable);
+            } else {
+                Bukkit.getScheduler().runTask(plugin, runnable);
+            }
         } else {
-            Bukkit.getScheduler().runTask(plugin, runnable);
+            runnable.run();
         }
 
         linesRef.set(null);
