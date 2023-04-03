@@ -13,7 +13,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ import java.util.regex.Pattern;
  */
 public class VanillaHologram extends SimpleHologram<Location> implements Colored {
     private static final int VERSION;
+    private static final boolean IS_FOLIA;
 
     static {
         Matcher matcher = Pattern.compile("MC: \\d\\.(\\d+)").matcher(Bukkit.getVersion());
@@ -36,12 +36,21 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         } else {
             VERSION = -1;
         }
+
+        boolean isFolia;
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            isFolia = true;
+        } catch (ClassNotFoundException ignored) {
+            isFolia = false;
+        }
+        IS_FOLIA = isFolia;
     }
 
     private final List<Entity> entities = new ArrayList<>();
     private final AtomicReference<List<HologramLine>> linesRef = new AtomicReference<>();
     private final Plugin plugin;
-    private BukkitTask task;
+    private Runnable cancelTaskRunnable;
 
     /**
      * Create a new hologram
@@ -57,7 +66,11 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
 
     @Override
     protected void initHologram() {
-        task = Bukkit.getScheduler().runTaskTimer(plugin, this::updateHologramEntity, 5, 5);
+        if (IS_FOLIA) {
+            cancelTaskRunnable = Bukkit.getGlobalRegionScheduler().runAtFixedRate(plugin, s -> updateHologramEntity(), 5, 5)::cancel;
+        } else {
+            cancelTaskRunnable = Bukkit.getScheduler().runTaskTimer(plugin, this::updateHologramEntity, 5, 5)::cancel;
+        }
     }
 
     private void updateHologramEntity() {
@@ -123,13 +136,13 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
 
     @Override
     protected void clearHologram() {
-        if (task != null) {
-            task.cancel();
-            task = null;
+        if (cancelTaskRunnable != null) {
+            cancelTaskRunnable.run();
+            cancelTaskRunnable = null;
         }
 
         Runnable runnable = this::clearHologramEntity;
-        if (Bukkit.isPrimaryThread() || !plugin.isEnabled()) {
+        if (IS_FOLIA || Bukkit.isPrimaryThread() || !plugin.isEnabled()) {
             runnable.run();
         } else {
             Bukkit.getScheduler().runTask(plugin, runnable);
