@@ -6,7 +6,7 @@
 
     <groupId>me.hsgamer</groupId>
     <artifactId>uni-hologram</artifactId>
-    <version>1.5.5-SNAPSHOT</version>
+    <version>1.5.5</version>
     <packaging>pom</packaging>
     <modules>
         <module>common</module>
