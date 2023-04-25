@@ -99,6 +99,14 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         }
     }
 
+    private static void teleport(Entity entity, Location location) {
+        if (IS_FOLIA) {
+            entity.teleportAsync(location);
+        } else {
+            entity.teleport(location);
+        }
+    }
+
     private void updateHologramEntity() {
         List<HologramLine> toUpdate = linesRef.getAndSet(null);
         if (toUpdate == null) {
@@ -126,7 +134,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
                 if (entity instanceof Item) {
                     item = (Item) entity;
                     item.setItemStack(((ItemHologramLine) line).getContent());
-                    item.teleport(itemLocation);
+                    teleport(item, itemLocation);
                 } else {
                     removeIfNotNull(entity);
                     item = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent());
@@ -141,7 +149,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
                 ArmorStand armorStand;
                 if (entity instanceof ArmorStand) {
                     armorStand = (ArmorStand) entity;
-                    armorStand.teleport(currentLocation);
+                    teleport(armorStand, currentLocation);
                 } else {
                     removeIfNotNull(entity);
                     armorStand = world.spawn(currentLocation, ArmorStand.class);
