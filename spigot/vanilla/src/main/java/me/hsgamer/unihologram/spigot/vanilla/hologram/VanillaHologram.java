@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -101,6 +102,11 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
     }
 
     private static void teleport(Entity entity, Location location) {
+        Location currentLocation = entity.getLocation();
+        if (currentLocation.getX() == location.getX() && currentLocation.getY() == location.getY() && currentLocation.getZ() == location.getZ()) {
+            return;
+        }
+
         if (IS_FOLIA) {
             entity.teleportAsync(location);
         } else {
@@ -135,7 +141,11 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
                 Item item;
                 if (entity instanceof Item) {
                     item = (Item) entity;
-                    item.setItemStack(((ItemHologramLine) line).getContent());
+                    ItemStack current = item.getItemStack();
+                    ItemStack expected = ((ItemHologramLine) line).getContent();
+                    if (!expected.isSimilar(current)) {
+                        item.setItemStack(expected);
+                    }
                     teleport(item, itemLocation);
                 } else {
                     removeIfNotNull(entity);
