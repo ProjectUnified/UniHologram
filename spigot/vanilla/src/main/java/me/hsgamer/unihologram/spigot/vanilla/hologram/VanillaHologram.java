@@ -18,6 +18,8 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +49,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         IS_FOLIA = isFolia;
     }
 
-    private final List<Entity> entities = new ArrayList<>();
+    private final Queue<Entity> entities = new ConcurrentLinkedQueue<>();
     private final AtomicReference<List<HologramLine>> linesRef = new AtomicReference<>();
     private final Plugin plugin;
     private Runnable cancelTaskRunnable;
@@ -87,60 +89,79 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         initTask();
     }
 
+    private static void removeIfNotNull(Entity entity) {
+        if (entity != null) {
+            try {
+                entity.remove();
+            } catch (Exception ignored) {
+                // IGNORED
+            }
+        }
+    }
+
     private void updateHologramEntity() {
         List<HologramLine> toUpdate = linesRef.getAndSet(null);
         if (toUpdate == null) {
             return;
         }
 
-        clearHologramEntity();
-
         World world = location.getWorld();
         if (world == null) {
             return;
         }
 
+        List<Entity> newEntities = new ArrayList<>();
+
         Location currentLocation = location.clone().add(0, -2, 0);
         for (HologramLine line : toUpdate) {
+            Entity entity = entities.poll();
+
             currentLocation = currentLocation.clone().add(0, -0.27, 0);
-            Entity entity;
+
             if (line instanceof ItemHologramLine && VERSION >= 10) {
                 currentLocation = currentLocation.clone().add(0, -0.4, 0);
                 Location itemLocation = currentLocation.clone().add(0, 2.2, 0);
-                Item item = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent());
+
+                Item item;
+                if (entity instanceof Item) {
+                    item = (Item) entity;
+                    item.setItemStack(((ItemHologramLine) line).getContent());
+                    item.teleport(itemLocation);
+                } else {
+                    removeIfNotNull(entity);
+                    item = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent());
+                    item.setGravity(false);
+                    item.setVelocity(new Vector(0, 0, 0));
+                    item.setInvulnerable(true);
+                    item.setPickupDelay(Integer.MAX_VALUE);
+                    item.setCustomNameVisible(false);
+                }
                 entity = item;
-                entity.setGravity(false);
-                entity.setVelocity(new Vector(0, 0, 0));
-                entity.teleport(itemLocation);
-                entity.setInvulnerable(true);
-                item.setPickupDelay(Integer.MAX_VALUE);
-                item.setCustomNameVisible(false);
             } else {
-                ArmorStand armorStand = world.spawn(currentLocation, ArmorStand.class);
+                ArmorStand armorStand;
+                if (entity instanceof ArmorStand) {
+                    armorStand = (ArmorStand) entity;
+                    armorStand.teleport(currentLocation);
+                } else {
+                    removeIfNotNull(entity);
+                    armorStand = world.spawn(currentLocation, ArmorStand.class);
+                    armorStand.setGravity(false);
+                    armorStand.setVisible(false);
+                    armorStand.setCustomNameVisible(true);
+                    armorStand.setInvulnerable(true);
+                }
                 entity = armorStand;
-                armorStand.setGravity(false);
-                armorStand.setVisible(false);
-                armorStand.setCustomNameVisible(true);
-                armorStand.setInvulnerable(true);
 
                 String content = line instanceof TextHologramLine
                         ? colorize(((TextHologramLine) line).getContent())
                         : line.getRawContent();
                 armorStand.setCustomName(content.isEmpty() ? ChatColor.RESET.toString() : content);
             }
-            entities.add(entity);
-        }
-    }
 
-    private void clearHologramEntity() {
-        entities.forEach(entity -> {
-            try {
-                entity.remove();
-            } catch (Exception ignored) {
-                // IGNORED
-            }
-        });
-        entities.clear();
+            newEntities.add(entity);
+        }
+
+        entities.addAll(newEntities);
     }
 
     @Override
@@ -155,7 +176,15 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
             cancelTaskRunnable = null;
         }
 
-        Runnable runnable = this::clearHologramEntity;
+        Runnable runnable = () -> {
+            while (true) {
+                Entity entity = entities.poll();
+                if (entity == null) {
+                    break;
+                }
+                removeIfNotNull(entity);
+            }
+        };
         if (plugin.isEnabled()) {
             if (IS_FOLIA) {
                 Bukkit.getRegionScheduler().execute(plugin, location, runnable);
