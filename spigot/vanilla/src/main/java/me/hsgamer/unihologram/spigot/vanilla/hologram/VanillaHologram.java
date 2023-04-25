@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,7 +49,8 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         IS_FOLIA = isFolia;
     }
 
-    private final Queue<Entity> entities = new ConcurrentLinkedQueue<>();
+    private final Queue<Entity> entities = new LinkedBlockingQueue<>();
+    private final AtomicReference<List<Entity>> newEntitiesRef = new AtomicReference<>();
     private final AtomicReference<List<HologramLine>> linesRef = new AtomicReference<>();
     private final Plugin plugin;
     private Runnable cancelTaskRunnable;
@@ -119,6 +120,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         }
 
         List<Entity> newEntities = new ArrayList<>();
+        newEntitiesRef.set(newEntities);
 
         Location currentLocation = location.clone().add(0, -2, 0);
         for (HologramLine line : toUpdate) {
@@ -170,6 +172,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         }
 
         entities.addAll(newEntities);
+        newEntitiesRef.set(null);
     }
 
     @Override
@@ -192,15 +195,20 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
                 }
                 removeIfNotNull(entity);
             }
-        };
-        if (plugin.isEnabled()) {
-            if (IS_FOLIA) {
-                Bukkit.getRegionScheduler().execute(plugin, location, runnable);
-            } else {
-                Bukkit.getScheduler().runTask(plugin, runnable);
+
+            List<Entity> newEntities = newEntitiesRef.getAndSet(null);
+            if (newEntities != null) {
+                for (Entity entity : newEntities) {
+                    removeIfNotNull(entity);
+                }
             }
-        } else {
+        };
+        if (Bukkit.isPrimaryThread()) {
             runnable.run();
+        } else if (IS_FOLIA) {
+            Bukkit.getRegionScheduler().execute(plugin, location, runnable);
+        } else {
+            Bukkit.getScheduler().runTask(plugin, runnable);
         }
 
         linesRef.set(null);
