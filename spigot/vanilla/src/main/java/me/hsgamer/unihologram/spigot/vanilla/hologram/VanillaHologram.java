@@ -68,6 +68,29 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         this.plugin = plugin;
     }
 
+    private static void removeIfNotNull(Entity entity) {
+        if (entity != null) {
+            try {
+                entity.remove();
+            } catch (Exception ignored) {
+                // IGNORED
+            }
+        }
+    }
+
+    private static void teleport(Entity entity, Location location) {
+        Location currentLocation = entity.getLocation();
+        if (currentLocation.getX() == location.getX() && currentLocation.getY() == location.getY() && currentLocation.getZ() == location.getZ()) {
+            return;
+        }
+
+        if (IS_FOLIA) {
+            entity.teleportAsync(location);
+        } else {
+            entity.teleport(location);
+        }
+    }
+
     private void initTask() {
         if (IS_FOLIA) {
             cancelTaskRunnable = Bukkit.getRegionScheduler().runAtFixedRate(plugin, location, s -> updateHologramEntity(), 5, 5)::cancel;
@@ -91,26 +114,13 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         initTask();
     }
 
-    private static void removeIfNotNull(Entity entity) {
-        if (entity != null) {
-            try {
-                entity.remove();
-            } catch (Exception ignored) {
-                // IGNORED
+    private void clearEntityQueue() {
+        while (true) {
+            Entity entity = entities.poll();
+            if (entity == null) {
+                break;
             }
-        }
-    }
-
-    private static void teleport(Entity entity, Location location) {
-        Location currentLocation = entity.getLocation();
-        if (currentLocation.getX() == location.getX() && currentLocation.getY() == location.getY() && currentLocation.getZ() == location.getZ()) {
-            return;
-        }
-
-        if (IS_FOLIA) {
-            entity.teleportAsync(location);
-        } else {
-            entity.teleport(location);
+            removeIfNotNull(entity);
         }
     }
 
@@ -181,6 +191,8 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
             newEntities.add(entity);
         }
 
+        clearEntityQueue();
+
         entities.addAll(newEntities);
         newEntitiesRef.set(null);
     }
@@ -198,13 +210,7 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         }
 
         Runnable runnable = () -> {
-            while (true) {
-                Entity entity = entities.poll();
-                if (entity == null) {
-                    break;
-                }
-                removeIfNotNull(entity);
-            }
+            clearEntityQueue();
 
             List<Entity> newEntities = newEntitiesRef.getAndSet(null);
             if (newEntities != null) {
