@@ -2,6 +2,7 @@ package me.hsgamer.unihologram.spigot;
 
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramProvider;
+import me.hsgamer.unihologram.spigot.cmi.provider.CMIHologramProvider;
 import me.hsgamer.unihologram.spigot.decentholograms.provider.DHHologramProvider;
 import me.hsgamer.unihologram.spigot.holographicdisplays.provider.HDHologramProvider;
 import me.hsgamer.unihologram.spigot.vanilla.provider.VanillaHologramProvider;
@@ -30,6 +31,8 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
             provider = new DHHologramProvider();
         } else if (HDHologramProvider.isAvailable()) {
             provider = new HDHologramProvider(plugin);
+        } else if (CMIHologramProvider.isAvailable()) {
+            provider = new CMIHologramProvider();
         } else {
             provider = new VanillaHologramProvider(plugin);
         }
