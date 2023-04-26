@@ -6,5 +6,6 @@ author: HSGamer
 softdepend:
   - DecentHolograms
   - HolographicDisplays
+  - CMI
 api-version: '1.13'
 folia-supported: true
