@@ -24,5 +24,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/CMI-API9.5.0.8.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>CMILib</groupId>
+            <artifactId>CMILib</artifactId>
+            <version>1.2.5.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/CMILib1.2.5.3.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
