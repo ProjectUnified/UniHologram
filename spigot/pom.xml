@@ -15,7 +15,6 @@
         <module>holographicdisplays</module>
         <module>cmi</module>
         <module>vanilla</module>
-        <module>bundle</module>
         <module>test</module>
         <module>plugin</module>
     </modules>

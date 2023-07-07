@@ -1,7 +1,7 @@
 package me.hsgamer.unihologram.spigot.test;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.SpigotHologramProvider;
+import me.hsgamer.unihologram.spigot.common.provider.SpigotHologramProvider;
 import me.hsgamer.unihologram.spigot.plugin.UniHologramPlugin;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
