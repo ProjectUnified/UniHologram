@@ -3,6 +3,7 @@ package me.hsgamer.unihologram.spigot.common.provider;
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramProvider;
 import me.hsgamer.unihologram.common.hologram.NoneHologram;
+import me.hsgamer.unihologram.common.provider.LocalHologramProvider;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +13,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -20,7 +20,6 @@ import java.util.Optional;
  * It will use the best provider available.
  */
 public class SpigotHologramProvider implements HologramProvider<Location> {
-    private final Plugin plugin;
     private final HologramProvider<Location> provider;
 
     /**
@@ -29,13 +28,7 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
      * @param plugin the plugin
      */
     public SpigotHologramProvider(Plugin plugin) {
-        this.plugin = plugin;
-        this.provider = getProviderOrNone(
-                "me.hsgamer.unihologram.spigot.decentholograms.provider.DHHologramProvider",
-                "me.hsgamer.unihologram.spigot.holographicdisplays.provider.HDHologramProvider",
-                "me.hsgamer.unihologram.spigot.cmi.provider.CMIHologramProvider",
-                "me.hsgamer.unihologram.spigot.vanilla.provider.VanillaHologramProvider"
-        );
+        this.provider = getDefaultProviderOrNone(plugin);
     }
 
     /**
@@ -57,7 +50,7 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
         }
     }
 
-    private Optional<HologramProvider<Location>> getProvider(String className) {
+    private static Optional<HologramProvider<Location>> getProvider(Plugin plugin, String className) {
         Class<?> clazz;
         try {
             clazz = Class.forName(className);
@@ -102,32 +95,25 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
         return Optional.of(provider);
     }
 
-    private HologramProvider<Location> getProviderOrNone(String... classNames) {
+    private static HologramProvider<Location> getDefaultProviderOrNone(Plugin plugin) {
+        final String[] classNames = {
+                "me.hsgamer.unihologram.spigot.decentholograms.provider.DHHologramProvider",
+                "me.hsgamer.unihologram.spigot.holographicdisplays.provider.HDHologramProvider",
+                "me.hsgamer.unihologram.spigot.cmi.provider.CMIHologramProvider",
+                "me.hsgamer.unihologram.spigot.vanilla.provider.VanillaHologramProvider"
+        };
+
         for (String className : classNames) {
-            Optional<HologramProvider<Location>> optional = getProvider(className);
+            Optional<HologramProvider<Location>> optional = getProvider(plugin, className);
             if (optional.isPresent()) {
                 return optional.get();
             }
         }
-        return new HologramProvider<Location>() {
+
+        return new LocalHologramProvider<Location>() {
             @Override
-            public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
+            protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location) {
                 return new NoneHologram<>(name, location);
-            }
-
-            @Override
-            public Optional<Hologram<Location>> getHologram(@NotNull String name) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Collection<Hologram<Location>> getAllHolograms() {
-                return Collections.emptyList();
-            }
-
-            @Override
-            public boolean isLocal() {
-                return true;
             }
         };
     }
