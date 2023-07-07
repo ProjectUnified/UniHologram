@@ -48,12 +48,12 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
     private static boolean checkClassDependAvailable(Class<?> clazz) {
         try {
             Method method = clazz.getDeclaredMethod("isAvailable");
-            if (method.getReturnType() != boolean.class) {
+            if (method.getReturnType().equals(boolean.class) || method.getReturnType().equals(Boolean.class)) {
                 return false;
             }
             return (boolean) method.invoke(null);
         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-            return false;
+            return true;
         }
     }
 
