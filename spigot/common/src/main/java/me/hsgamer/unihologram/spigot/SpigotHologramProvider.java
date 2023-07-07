@@ -1,4 +1,4 @@
-package me.hsgamer.unihologram.spigot.common.provider;
+package me.hsgamer.unihologram.spigot;
 
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramProvider;
