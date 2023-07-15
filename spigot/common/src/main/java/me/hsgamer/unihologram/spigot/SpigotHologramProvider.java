@@ -57,7 +57,7 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
             if (!HologramProvider.class.isAssignableFrom(clazz)) {
                 return Optional.empty();
             }
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | NoClassDefFoundError e) {
             return Optional.empty();
         }
 
