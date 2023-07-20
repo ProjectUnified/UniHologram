@@ -22,6 +22,23 @@ public class VanillaHologramProvider extends LocalHologramProvider<Location> {
         this.plugin = plugin;
     }
 
+    /**
+     * Do some checks to make sure the provider can be used
+     *
+     * @return true if the provider can be used
+     */
+    public static boolean isAvailable() {
+        // Disable if Folia is available
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return false;
+        } catch (ClassNotFoundException ignored) {
+            // IGNORED
+        }
+
+        return true;
+    }
+
     @Override
     protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location) {
         return new VanillaHologram(plugin, name, location);

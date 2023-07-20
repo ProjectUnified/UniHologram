@@ -14,6 +14,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import java.util.regex.Pattern;
  */
 public class VanillaHologram extends SimpleHologram<Location> implements Colored {
     private static final int VERSION;
-    private static final boolean IS_FOLIA;
 
     static {
         Matcher matcher = Pattern.compile("MC: \\d\\.(\\d+)").matcher(Bukkit.getVersion());
@@ -39,22 +39,13 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         } else {
             VERSION = -1;
         }
-
-        boolean isFolia;
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-            isFolia = true;
-        } catch (ClassNotFoundException ignored) {
-            isFolia = false;
-        }
-        IS_FOLIA = isFolia;
     }
 
     private final Queue<Entity> entities = new LinkedBlockingQueue<>();
     private final AtomicReference<List<Entity>> newEntitiesRef = new AtomicReference<>();
     private final AtomicReference<List<HologramLine>> linesRef = new AtomicReference<>();
     private final Plugin plugin;
-    private Runnable cancelTaskRunnable;
+    private BukkitTask updateTask;
 
     /**
      * Create a new hologram
@@ -83,35 +74,16 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         if (currentLocation.getX() == location.getX() && currentLocation.getY() == location.getY() && currentLocation.getZ() == location.getZ()) {
             return;
         }
-
-        if (IS_FOLIA) {
-            entity.teleportAsync(location);
-        } else {
-            entity.teleport(location);
-        }
-    }
-
-    private void initTask() {
-        if (IS_FOLIA) {
-            cancelTaskRunnable = Bukkit.getRegionScheduler().runAtFixedRate(plugin, location, s -> updateHologramEntity(), 5, 5)::cancel;
-        } else {
-            cancelTaskRunnable = Bukkit.getScheduler().runTaskTimer(plugin, this::updateHologramEntity, 5, 5)::cancel;
-        }
+        entity.teleport(location);
     }
 
     @Override
     protected void initHologram() {
-        initTask();
-    }
-
-    @Override
-    public void setLocation(Location location) {
-        if (cancelTaskRunnable != null) {
-            cancelTaskRunnable.run();
-            cancelTaskRunnable = null;
+        if (updateTask != null) {
+            updateTask.cancel();
+            updateTask = null;
         }
-        super.setLocation(location);
-        initTask();
+        updateTask = Bukkit.getScheduler().runTaskTimer(plugin, this::updateHologramEntity, 5, 5);
     }
 
     private void clearEntityQueue() {
@@ -204,9 +176,9 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
 
     @Override
     protected void clearHologram() {
-        if (cancelTaskRunnable != null) {
-            cancelTaskRunnable.run();
-            cancelTaskRunnable = null;
+        if (updateTask != null) {
+            updateTask.cancel();
+            updateTask = null;
         }
 
         Runnable runnable = () -> {
@@ -221,8 +193,6 @@ public class VanillaHologram extends SimpleHologram<Location> implements Colored
         };
         if (Bukkit.isPrimaryThread()) {
             runnable.run();
-        } else if (IS_FOLIA) {
-            Bukkit.getRegionScheduler().execute(plugin, location, runnable);
         } else {
             Bukkit.getScheduler().runTask(plugin, runnable);
         }
