@@ -9,9 +9,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -42,45 +42,61 @@ public class FoliaHologram extends SimpleHologram<Location> implements Colored {
     private void despawnEntity() {
         List<Entity> entities = entityRef.get();
         if (entities != null) {
-            entities.forEach(Entity::remove);
+            entities.forEach(entity -> {
+                if (entity.isValid()) {
+                    entity.getScheduler().run(plugin, t -> entity.remove(), () -> {
+                    });
+                }
+            });
             entityRef.set(null);
         }
     }
 
     @Override
     protected void updateHologram() {
+        World world = location.getWorld();
+        if (world == null) {
+            return;
+        }
+
         Bukkit.getRegionScheduler().execute(plugin, location, () -> {
             synchronized (lock) {
                 despawnEntity();
 
-                List<Entity> newEntities = new ArrayList<>();
+                List<Entity> entities = new ArrayList<>();
+                Location currentLocation = location.clone().add(0, -2, 0);
                 for (HologramLine line : getLines()) {
+                    currentLocation = currentLocation.clone().add(0, -0.27, 0);
                     Entity entity;
                     if (line instanceof ItemHologramLine) {
-                        Item item = location.getWorld().dropItem(location, ((ItemHologramLine) line).getContent());
-                        entity = item;
-                        item.setGravity(false);
-                        item.setVelocity(new Vector(0, 0, 0));
-                        item.setInvulnerable(true);
-                        item.setPickupDelay(Integer.MAX_VALUE);
-                        item.setCustomNameVisible(false);
+                        currentLocation = currentLocation.clone().add(0, -0.4, 0);
+                        Location itemLocation = currentLocation.clone().add(0, 2.2, 0);
+                        entity = world.dropItem(itemLocation, ((ItemHologramLine) line).getContent(), item -> {
+                            item.setGravity(false);
+                            item.setInvulnerable(true);
+                            item.setPickupDelay(Integer.MAX_VALUE);
+                            item.setCustomNameVisible(false);
+                            item.setVelocity(new Vector(0, 0, 0));
+                        });
                     } else {
-                        ArmorStand armorStand = location.getWorld().spawn(location, ArmorStand.class);
-                        entity = armorStand;
-                        armorStand.setGravity(false);
-                        armorStand.setInvulnerable(true);
-                        armorStand.setCustomNameVisible(true);
-                        String content = line instanceof TextHologramLine
-                                ? colorize(((TextHologramLine) line).getContent())
-                                : line.getRawContent();
-                        armorStand.customName(content.isEmpty()
-                                ? Component.empty()
-                                : LegacyComponentSerializer.legacyAmpersand().deserialize(content)
-                        );
+                        entity = world.spawn(currentLocation, ArmorStand.class, armorStand -> {
+                            armorStand.setGravity(false);
+                            armorStand.setVisible(false);
+                            armorStand.setCustomNameVisible(true);
+                            armorStand.setInvulnerable(true);
+
+                            String content = line instanceof TextHologramLine
+                                    ? colorize(((TextHologramLine) line).getContent())
+                                    : line.getRawContent();
+                            armorStand.customName(content.isEmpty()
+                                    ? Component.empty()
+                                    : LegacyComponentSerializer.legacyAmpersand().deserialize(content)
+                            );
+                        });
                     }
-                    newEntities.add(entity);
+                    entities.add(entity);
                 }
-                entityRef.set(newEntities);
+                entityRef.set(entities);
             }
         });
     }
@@ -92,15 +108,9 @@ public class FoliaHologram extends SimpleHologram<Location> implements Colored {
 
     @Override
     protected void clearHologram() {
-        Runnable runnable = () -> {
-            synchronized (lock) {
-                despawnEntity();
-            }
-        };
-        if (Bukkit.isOwnedByCurrentRegion(location)) {
-            runnable.run();
-        } else {
-            Bukkit.getRegionScheduler().execute(plugin, location, runnable);
+        // TODO: Find out a reason why the entities don't get removed when the server stops
+        synchronized (lock) {
+            despawnEntity();
         }
     }
 }
