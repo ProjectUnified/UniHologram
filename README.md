@@ -8,7 +8,7 @@ A unified library to work with Minecraft's Hologram
 <!-- Spigot -->
 <dependency>
     <groupId>me.hsgamer</groupId>
-    <artifactId>uni-hologram-spigot-common</artifactId>
+    <artifactId>uni-hologram-spigot-bundle</artifactId>
     <version>VERSION</version>
 </dependency>
 

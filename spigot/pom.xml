@@ -16,6 +16,7 @@
         <module>cmi</module>
         <module>folia</module>
         <module>vanilla</module>
+        <module>bundle</module>
         <module>test</module>
         <module>plugin</module>
     </modules>
