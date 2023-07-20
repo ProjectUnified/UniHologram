@@ -10,6 +10,8 @@ me.hsgamer.unihologram.spigot.common.hologram.extra
 me.hsgamer.unihologram.spigot.common.line
 me.hsgamer.unihologram.spigot.decentholograms.hologram
 me.hsgamer.unihologram.spigot.decentholograms.provider
+me.hsgamer.unihologram.spigot.folia.hologram
+me.hsgamer.unihologram.spigot.folia.provider
 me.hsgamer.unihologram.spigot.holographicdisplays.hologram
 me.hsgamer.unihologram.spigot.holographicdisplays.provider
 me.hsgamer.unihologram.spigot.plugin
