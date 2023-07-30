@@ -6,6 +6,7 @@ import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
+import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
 import net.Zrips.CMILib.Container.CMILocation;
 import net.Zrips.CMILib.Items.CMIItemStack;
 import org.bukkit.Location;
@@ -52,21 +53,21 @@ public class CMIHologram implements Hologram<Location> {
         this.hologram = hologram;
     }
 
-    private void checkHologramInitialized() {
-        Preconditions.checkNotNull(hologram, "Hologram is not initialized");
-    }
-
     private static String toLine(HologramLine line) {
         if (line instanceof ItemHologramLine) {
             ItemStack item = ((ItemHologramLine) line).getContent();
             return "ICON:" + CMIItemStack.serialize(item);
+        } else if (line instanceof SkullHologramLine) {
+            return "ICON:head:" + ((SkullHologramLine) line).getContent();
         } else {
             return line.getRawContent();
         }
     }
 
     private static HologramLine fromLine(String line) {
-        if (line.toLowerCase(Locale.ROOT).startsWith("icon:")) {
+        if (line.toLowerCase(Locale.ROOT).startsWith("icon:head:")) {
+            return new SkullHologramLine(line.substring(10));
+        } else if (line.toLowerCase(Locale.ROOT).startsWith("icon:")) {
             CMIItemStack item = CMIItemStack.deserialize(line.substring(5));
             return new ItemHologramLine(item.getItemStack());
         } else {
@@ -80,6 +81,10 @@ public class CMIHologram implements Hologram<Location> {
 
     private static List<HologramLine> fromLine(List<String> lines) {
         return lines.stream().map(CMIHologram::fromLine).collect(Collectors.toList());
+    }
+
+    private void checkHologramInitialized() {
+        Preconditions.checkNotNull(hologram, "Hologram is not initialized");
     }
 
     @Override
