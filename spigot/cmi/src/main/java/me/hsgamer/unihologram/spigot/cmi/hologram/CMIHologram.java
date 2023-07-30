@@ -5,11 +5,16 @@ import com.google.common.base.Preconditions;
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
+import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
+import net.Zrips.CMILib.Container.CMILocation;
+import net.Zrips.CMILib.Items.CMIItemStack;
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -30,7 +35,7 @@ public class CMIHologram implements Hologram<Location> {
     public CMIHologram(String name, Location location) {
         this.name = name;
         this.hologramSupplier = () -> {
-            com.Zrips.CMI.Modules.Holograms.CMIHologram hologram = new com.Zrips.CMI.Modules.Holograms.CMIHologram(name, location);
+            com.Zrips.CMI.Modules.Holograms.CMIHologram hologram = new com.Zrips.CMI.Modules.Holograms.CMIHologram(name, new CMILocation(location));
             CMI.getInstance().getHologramManager().addHologram(hologram);
             hologram.update();
             return hologram;
@@ -51,30 +56,56 @@ public class CMIHologram implements Hologram<Location> {
         Preconditions.checkNotNull(hologram, "Hologram is not initialized");
     }
 
+    private static String toLine(HologramLine line) {
+        if (line instanceof ItemHologramLine) {
+            ItemStack item = ((ItemHologramLine) line).getContent();
+            return "ICON:" + CMIItemStack.serialize(item);
+        } else {
+            return line.getRawContent();
+        }
+    }
+
+    private static HologramLine fromLine(String line) {
+        if (line.toLowerCase(Locale.ROOT).startsWith("icon:")) {
+            CMIItemStack item = CMIItemStack.deserialize(line.substring(5));
+            return new ItemHologramLine(item.getItemStack());
+        } else {
+            return new TextHologramLine(line);
+        }
+    }
+
+    private static List<String> toLine(List<HologramLine> lines) {
+        return lines.stream().map(CMIHologram::toLine).collect(Collectors.toList());
+    }
+
+    private static List<HologramLine> fromLine(List<String> lines) {
+        return lines.stream().map(CMIHologram::fromLine).collect(Collectors.toList());
+    }
+
     @Override
     public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
-        return hologram.getLines().stream().map(TextHologramLine::new).collect(Collectors.toList());
+        return fromLine(hologram.getLines());
     }
 
     @Override
     public void setLines(@NotNull List<HologramLine> lines) {
         checkHologramInitialized();
-        hologram.setLines(lines.stream().map(HologramLine::getRawContent).collect(Collectors.toList()));
+        hologram.setLines(toLine(lines));
         hologram.refresh();
     }
 
     @Override
     public void addLine(@NotNull HologramLine line) {
         checkHologramInitialized();
-        hologram.addLine(line.getRawContent());
+        hologram.addLine(toLine(line));
         hologram.refresh();
     }
 
     @Override
     public void setLine(int index, @NotNull HologramLine line) {
         checkHologramInitialized();
-        hologram.setLine(index, line.getRawContent());
+        hologram.setLine(index, toLine(line));
         hologram.refresh();
     }
 
