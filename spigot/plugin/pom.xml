@@ -69,6 +69,11 @@
         </dependency>
         <dependency>
             <groupId>me.hsgamer</groupId>
+            <artifactId>uni-hologram-spigot-fancyholograms</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.hsgamer</groupId>
             <artifactId>uni-hologram-spigot-cmi</artifactId>
             <version>${project.version}</version>
         </dependency>

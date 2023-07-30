@@ -99,6 +99,7 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
         final String[] classNames = {
                 "me.hsgamer.unihologram.spigot.decentholograms.provider.DHHologramProvider",
                 "me.hsgamer.unihologram.spigot.holographicdisplays.provider.HDHologramProvider",
+                "me.hsgamer.unihologram.spigot.fancyholograms.provider.FHHologramProvider",
                 "me.hsgamer.unihologram.spigot.cmi.provider.CMIHologramProvider",
                 "me.hsgamer.unihologram.spigot.folia.provider.FoliaHologramProvider",
                 "me.hsgamer.unihologram.spigot.vanilla.provider.VanillaHologramProvider"
