@@ -6,8 +6,10 @@ import de.oliver.fancyholograms.api.Hologram;
 import de.oliver.fancyholograms.api.HologramData;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for FancyHolograms
  */
-public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location> {
+public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility {
     private final Hologram hologram;
 
     /**
@@ -121,5 +123,35 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
         checkHologramInitialized();
         hologram.getData().setLocation(location);
         updateHologram();
+    }
+
+    @Override
+    public boolean isVisible(Player viewer) {
+        checkHologramInitialized();
+        return hologram.isShown(viewer);
+    }
+
+    @Override
+    public void showAll() {
+        checkHologramInitialized();
+        hologram.showHologram(Bukkit.getOnlinePlayers());
+    }
+
+    @Override
+    public void hideAll() {
+        checkHologramInitialized();
+        hologram.hideHologram(Bukkit.getOnlinePlayers());
+    }
+
+    @Override
+    public void showTo(Player viewer) {
+        checkHologramInitialized();
+        hologram.showHologram(viewer);
+    }
+
+    @Override
+    public void hideTo(Player viewer) {
+        checkHologramInitialized();
+        hologram.hideHologram(viewer);
     }
 }
