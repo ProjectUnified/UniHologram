@@ -9,6 +9,7 @@ public class UniHologramTest extends BasePlugin {
     @Override
     public void enable() {
         hologramManager = new HologramManager();
+        getLogger().info("Provider: " + hologramManager.getProvider().getClass().getName());
         registerCommand(new MainCommand(this));
     }
 

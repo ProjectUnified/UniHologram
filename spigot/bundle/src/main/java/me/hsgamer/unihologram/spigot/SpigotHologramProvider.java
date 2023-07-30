@@ -120,6 +120,15 @@ public class SpigotHologramProvider implements HologramProvider<Location> {
         };
     }
 
+    /**
+     * Get the original provider
+     *
+     * @return the original provider
+     */
+    public @NotNull HologramProvider<Location> getProvider() {
+        return provider;
+    }
+
     @Override
     public @NotNull Hologram<Location> createHologram(@NotNull String name, @NotNull Location location) {
         return provider.createHologram(name, location);

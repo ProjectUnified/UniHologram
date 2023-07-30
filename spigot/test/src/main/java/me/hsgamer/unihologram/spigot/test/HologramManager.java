@@ -1,6 +1,7 @@
 package me.hsgamer.unihologram.spigot.test;
 
 import me.hsgamer.unihologram.common.api.Hologram;
+import me.hsgamer.unihologram.common.api.HologramProvider;
 import me.hsgamer.unihologram.spigot.SpigotHologramProvider;
 import me.hsgamer.unihologram.spigot.plugin.UniHologramPlugin;
 import org.bukkit.Location;
@@ -61,6 +62,10 @@ public class HologramManager {
             handler.createHologram(name, location).init();
         }
         return true;
+    }
+
+    public HologramProvider<Location> getProvider() {
+        return provider.getProvider();
     }
 
     public void clearAll() {
