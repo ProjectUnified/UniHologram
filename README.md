@@ -30,6 +30,11 @@ A unified library to work with Minecraft's Hologram
 </dependency>
 <dependency>
     <groupId>me.hsgamer</groupId>
+    <artifactId>uni-hologram-spigot-fancyholograms</artifactId>
+    <version>VERSION</version>
+</dependency>
+<dependency>
+    <groupId>me.hsgamer</groupId>
     <artifactId>uni-hologram-spigot-vanilla</artifactId>
     <version>VERSION</version>
 </dependency>
