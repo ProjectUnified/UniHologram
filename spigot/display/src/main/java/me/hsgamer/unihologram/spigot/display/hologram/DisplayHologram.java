@@ -1,8 +1,10 @@
 package me.hsgamer.unihologram.spigot.display.hologram;
 
+import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.spigot.display.alignment.DisplayTextAlignment;
 import me.hsgamer.unihologram.spigot.display.billboard.DisplayBillboard;
 import org.bukkit.Color;
+import org.bukkit.Location;
 
 /**
  * The {@link me.hsgamer.unihologram.common.api.Hologram} that uses the new TextDisplay API
@@ -105,4 +107,20 @@ public interface DisplayHologram {
      * @param alignment the text alignment
      */
     void setAlignment(DisplayTextAlignment alignment);
+
+    /**
+     * Get the origin location.
+     * This is the location of the text display, while {@link Hologram#getLocation()} is the location of the top of the display.
+     *
+     * @return the origin location
+     */
+    Location getOriginLocation();
+
+    /**
+     * Set the origin location
+     *
+     * @param originLocation the origin location
+     * @see #getOriginLocation()
+     */
+    void setOriginLocation(Location originLocation);
 }

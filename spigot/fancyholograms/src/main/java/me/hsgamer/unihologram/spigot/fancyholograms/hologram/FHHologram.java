@@ -326,4 +326,17 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
         }
         updateHologram();
     }
+
+    @Override
+    public Location getOriginLocation() {
+        checkHologramInitialized();
+        return hologram.getData().getLocation();
+    }
+
+    @Override
+    public void setOriginLocation(Location originLocation) {
+        checkHologramInitialized();
+        hologram.getData().setLocation(originLocation);
+        updateHologram();
+    }
 }
