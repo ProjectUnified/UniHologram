@@ -9,8 +9,12 @@ import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.display.DisplayBillboard;
 import me.hsgamer.unihologram.display.DisplayHologram;
 import me.hsgamer.unihologram.display.DisplayTextAlignment;
+import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -28,7 +32,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for FancyHolograms
  */
-public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility, DisplayHologram<Location> {
+public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, Colored, PlayerVisibility, DisplayHologram<Location> {
     private static final double LINE_HEIGHT = 0.25;
     private final Hologram hologram;
 
@@ -92,6 +96,22 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
         FancyHologramsPlugin.get().getHologramsManager().refreshHologramForPlayersInWorld(hologram);
     }
 
+    private String toText(HologramLine line) {
+        if (line instanceof TextHologramLine) {
+            String content = ((TextHologramLine) line).getContent();
+            String colored = colorize(content);
+            if (colored.contains(String.valueOf(LegacyComponentSerializer.SECTION_CHAR))) {
+                Component coloredComponent = LegacyComponentSerializer.legacySection().deserialize(colored);
+                return MiniMessage.miniMessage().serializeOr(coloredComponent, line.getRawContent());
+            }
+        }
+        return line.getRawContent();
+    }
+
+    private List<String> toText(List<HologramLine> lines) {
+        return lines.stream().map(this::toText).collect(Collectors.toList());
+    }
+
     @Override
     public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
@@ -101,7 +121,7 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
     @Override
     public void setLines(@NotNull List<HologramLine> lines) {
         checkHologramInitialized();
-        hologram.getData().setText(lines.stream().map(HologramLine::getRawContent).collect(Collectors.toList()));
+        hologram.getData().setText(toText(lines));
         updateHologram();
     }
 
