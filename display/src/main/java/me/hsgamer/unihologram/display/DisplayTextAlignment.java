@@ -1,4 +1,4 @@
-package me.hsgamer.unihologram.spigot.display.alignment;
+package me.hsgamer.unihologram.display;
 
 /**
  * The alignment of the text display

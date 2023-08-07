@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>me.hsgamer</groupId>
-            <artifactId>uni-hologram-spigot-display</artifactId>
+            <artifactId>uni-hologram-display</artifactId>
             <version>${project.version}</version>
         </dependency>
 

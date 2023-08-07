@@ -1,15 +1,15 @@
-package me.hsgamer.unihologram.spigot.display.hologram;
+package me.hsgamer.unihologram.display;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.spigot.display.alignment.DisplayTextAlignment;
-import me.hsgamer.unihologram.spigot.display.billboard.DisplayBillboard;
-import org.bukkit.Color;
-import org.bukkit.Location;
+
+import java.awt.*;
 
 /**
- * The {@link me.hsgamer.unihologram.common.api.Hologram} that uses the new TextDisplay API
+ * The {@link me.hsgamer.unihologram.common.api.Hologram} that uses the new Minecraft TextDisplay API
+ *
+ * @param <T> the type of the location
  */
-public interface DisplayHologram {
+public interface DisplayHologram<T> extends Hologram<T> {
     /**
      * Get the background color
      *
@@ -114,7 +114,7 @@ public interface DisplayHologram {
      *
      * @return the origin location
      */
-    Location getOriginLocation();
+    T getOriginLocation();
 
     /**
      * Set the origin location
@@ -122,5 +122,5 @@ public interface DisplayHologram {
      * @param originLocation the origin location
      * @see #getOriginLocation()
      */
-    void setOriginLocation(Location originLocation);
+    void setOriginLocation(T originLocation);
 }

@@ -6,19 +6,19 @@ import de.oliver.fancyholograms.api.Hologram;
 import de.oliver.fancyholograms.api.HologramData;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
+import me.hsgamer.unihologram.display.DisplayBillboard;
+import me.hsgamer.unihologram.display.DisplayHologram;
+import me.hsgamer.unihologram.display.DisplayTextAlignment;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
-import me.hsgamer.unihologram.spigot.display.alignment.DisplayTextAlignment;
-import me.hsgamer.unihologram.spigot.display.billboard.DisplayBillboard;
-import me.hsgamer.unihologram.spigot.display.hologram.DisplayHologram;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * The hologram for FancyHolograms
  */
-public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility, DisplayHologram {
+public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Location>, PlayerVisibility, DisplayHologram<Location> {
     private static final double LINE_HEIGHT = 0.25;
     private final Hologram hologram;
 
@@ -199,7 +199,7 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
     public Color getBackgroundColor() {
         checkHologramInitialized();
         TextColor color = hologram.getData().getBackground();
-        return color != null ? Color.fromRGB(color.red(), color.green(), color.blue()) : null;
+        return color != null ? new Color(color.red(), color.green(), color.blue()) : null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package me.hsgamer.unihologram.spigot.display.billboard;
+package me.hsgamer.unihologram.display;
 
 /**
  * The axes/points around which the display can pivot
