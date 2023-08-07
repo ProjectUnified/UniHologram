@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class MoveCommand extends HologramCommand {
     public MoveCommand(UniHologramTest plugin) {
-        super(plugin, "move", "Move the hologram", "/<label> move <hologram>", "unihologram.move", false);
+        super(plugin, "move", "Move the hologram", "", false);
     }
 
     @Override

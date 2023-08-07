@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class DeleteCommand extends HologramCommand {
     public DeleteCommand(UniHologramTest plugin) {
-        super(plugin, "delete", "Delete a hologram", "/<label> delete <name>", "unihologram.delete", true);
+        super(plugin, "delete", "Delete a hologram", "", true);
     }
 
     @Override

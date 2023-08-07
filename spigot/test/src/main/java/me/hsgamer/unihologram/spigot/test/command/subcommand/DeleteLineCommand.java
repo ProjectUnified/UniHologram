@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class DeleteLineCommand extends HologramCommand {
     public DeleteLineCommand(UniHologramTest plugin) {
-        super(plugin, "deleteline", "Delete a line", "/<label> deleteline <hologram> <line>", "unihologram.deleteline", true);
+        super(plugin, "deleteline", "Delete a line", "<line>", true);
     }
 
     @Override

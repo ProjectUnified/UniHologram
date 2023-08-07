@@ -21,6 +21,14 @@ public class MainCommand extends Command {
         subCommandManager.registerSubcommand(new InsertLineCommand(plugin));
         subCommandManager.registerSubcommand(new CountLineCommand(plugin));
         subCommandManager.registerSubcommand(new MoveCommand(plugin));
+        subCommandManager.registerSubcommand(new BackgroundColorCommand(plugin));
+        subCommandManager.registerSubcommand(new BillboardCommand(plugin));
+        subCommandManager.registerSubcommand(new MoveOriginCommand(plugin));
+        subCommandManager.registerSubcommand(new ScaleCommand(plugin));
+        subCommandManager.registerSubcommand(new ShadowedCommand(plugin));
+        subCommandManager.registerSubcommand(new ShadowRadiusCommand(plugin));
+        subCommandManager.registerSubcommand(new ShadowStrengthCommand(plugin));
+        subCommandManager.registerSubcommand(new TextAlignmentCommand(plugin));
     }
 
     @Override

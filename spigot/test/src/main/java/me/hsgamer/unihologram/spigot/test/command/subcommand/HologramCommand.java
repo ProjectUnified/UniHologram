@@ -12,7 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -20,8 +19,8 @@ import java.util.Optional;
 public abstract class HologramCommand extends SubCommand {
     protected final UniHologramTest plugin;
 
-    protected HologramCommand(UniHologramTest plugin, @NotNull String name, @NotNull String description, @NotNull String usage, @Nullable String permission, boolean consoleAllowed) {
-        super(name, description, usage, permission, consoleAllowed);
+    protected HologramCommand(UniHologramTest plugin, @NotNull String name, @NotNull String description, @NotNull String argsUsage, boolean consoleAllowed) {
+        super(name, description, "/<label> addline <hologram>" + (argsUsage.isEmpty() ? "" : " " + argsUsage), "unihologram." + name, consoleAllowed);
         this.plugin = plugin;
     }
 

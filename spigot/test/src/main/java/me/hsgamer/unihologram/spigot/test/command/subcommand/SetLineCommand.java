@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class SetLineCommand extends HologramCommand {
     public SetLineCommand(UniHologramTest plugin) {
-        super(plugin, "setline", "Set a line", "/<label> setline <hologram> <line> <content>", "unihologram.setline", true);
+        super(plugin, "setline", "Set a line", "<line> <content>", true);
     }
 
     @Override
