@@ -14,8 +14,8 @@ public class MoveOriginCommand extends DisplayHologramCommand {
     @Override
     protected void onHologramCommand(CommandSender sender, DisplayHologram<Location> hologram, String[] args) {
         Player player = (Player) sender;
-        hologram.setOriginLocation(player.getLocation());
-        sender.sendMessage("Moved the origin to your location");
+        hologram.setOriginLocation(player.getEyeLocation());
+        sender.sendMessage("Moved the origin to your eye location");
     }
 
     @Override
