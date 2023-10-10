@@ -20,16 +20,16 @@
         <dependency>
             <groupId>CMI-API</groupId>
             <artifactId>CMI-API</artifactId>
-            <version>9.5.0.8</version>
+            <version>9.6.4.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/CMI-API9.5.0.8.jar</systemPath>
+            <systemPath>${project.basedir}/libs/CMI-API9.6.4.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>CMILib</groupId>
             <artifactId>CMILib</artifactId>
-            <version>1.2.5.3</version>
+            <version>1.4.2.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/CMILib1.2.5.3.jar</systemPath>
+            <systemPath>${project.basedir}/libs/CMILib1.4.2.1.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
