@@ -1,13 +1,15 @@
 package me.hsgamer.unihologram.spigot.fancyholograms.hologram;
 
 import com.google.common.base.Preconditions;
-import de.oliver.fancyholograms.FancyHologramsPlugin;
+import de.oliver.fancyholograms.HologramManagerImpl;
+import de.oliver.fancyholograms.api.FancyHologramsPlugin;
 import de.oliver.fancyholograms.api.Hologram;
 import de.oliver.fancyholograms.api.HologramData;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.display.DisplayBillboard;
 import me.hsgamer.unihologram.display.DisplayHologram;
+import me.hsgamer.unihologram.display.DisplayScale;
 import me.hsgamer.unihologram.display.DisplayTextAlignment;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;
@@ -21,6 +23,7 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -45,7 +48,7 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
     public FHHologram(String name, Location location) {
         HologramData data = new HologramData(name);
         data.setLocation(location);
-        this.hologram = FancyHologramsPlugin.get().getHologramsManager().create(data);
+        this.hologram = FancyHologramsPlugin.get().getHologramManager().create(data);
     }
 
     /**
@@ -63,28 +66,28 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
         return newLocation;
     }
 
-    private static Location getBottomLocation(Location location, float scale, int lineCount) {
+    private static Location getBottomLocation(Location location, float yScale, int lineCount) {
         Location newLocation = Objects.requireNonNull(location).clone();
-        newLocation.setY(newLocation.getY() - LINE_HEIGHT * scale * lineCount);
+        newLocation.setY(newLocation.getY() - LINE_HEIGHT * yScale * lineCount);
         return newLocation;
     }
 
     private Location getTopLocation() {
-        return getTopLocation(hologram.getData().getLocation(), hologram.getData().getScale(), hologram.getData().getText().size());
+        return getTopLocation(hologram.getData().getLocation(), hologram.getData().getScale().y, hologram.getData().getText().size());
     }
 
     private void setTopLocation(Location location) {
-        hologram.getData().setLocation(getBottomLocation(location, hologram.getData().getScale(), hologram.getData().getText().size()));
+        hologram.getData().setLocation(getBottomLocation(location, hologram.getData().getScale().y, hologram.getData().getText().size()));
     }
 
-    private void updateTopLocation(float scale, int lineCount) {
-        Location topLocation = getTopLocation(hologram.getData().getLocation(), hologram.getData().getScale(), hologram.getData().getText().size());
-        Location bottomLocation = getBottomLocation(topLocation, scale, lineCount);
+    private void updateTopLocation(float yScale, int lineCount) {
+        Location topLocation = getTopLocation(hologram.getData().getLocation(), hologram.getData().getScale().y, hologram.getData().getText().size());
+        Location bottomLocation = getBottomLocation(topLocation, yScale, lineCount);
         hologram.getData().setLocation(bottomLocation);
     }
 
     private void updateTopLocation(int lineCount) {
-        updateTopLocation(hologram.getData().getScale(), lineCount);
+        updateTopLocation(hologram.getData().getScale().y, lineCount);
     }
 
     private void checkHologramInitialized() {
@@ -93,7 +96,7 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
 
     private void updateHologram() {
         hologram.updateHologram();
-        FancyHologramsPlugin.get().getHologramsManager().refreshHologramForPlayersInWorld(hologram);
+        ((HologramManagerImpl) FancyHologramsPlugin.get().getHologramManager()).refreshHologramForPlayersInWorld(hologram);
     }
 
     private String toText(HologramLine line) {
@@ -157,19 +160,19 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
     public void init() {
         hologram.createHologram();
         hologram.showHologram(Bukkit.getOnlinePlayers());
-        FancyHologramsPlugin.get().getHologramsManager().addHologram(hologram);
+        FancyHologramsPlugin.get().getHologramManager().addHologram(hologram);
     }
 
     @Override
     public void clear() {
         hologram.hideHologram(Bukkit.getOnlinePlayers());
         hologram.deleteHologram();
-        FancyHologramsPlugin.get().getHologramsManager().removeHologram(hologram);
+        FancyHologramsPlugin.get().getHologramManager().removeHologram(hologram);
     }
 
     @Override
     public boolean isInitialized() {
-        return FancyHologramsPlugin.get().getHologramsManager().getHolograms().contains(hologram);
+        return ((HologramManagerImpl) FancyHologramsPlugin.get().getHologramManager()).getHolograms().contains(hologram);
     }
 
     @Override
@@ -230,16 +233,17 @@ public class FHHologram implements me.hsgamer.unihologram.common.api.Hologram<Lo
     }
 
     @Override
-    public float getScale() {
+    public DisplayScale getScale() {
         checkHologramInitialized();
-        return hologram.getData().getScale();
+        Vector3f scale = hologram.getData().getScale();
+        return new DisplayScale(scale.x(), scale.y(), scale.z());
     }
 
     @Override
-    public void setScale(float scale) {
+    public void setScale(DisplayScale scale) {
         checkHologramInitialized();
-        updateTopLocation(scale, hologram.getData().getText().size());
-        hologram.getData().setScale(scale);
+        updateTopLocation(scale.y, hologram.getData().getText().size());
+        hologram.getData().setScale(scale.x, scale.y, scale.z);
         updateHologram();
     }
 

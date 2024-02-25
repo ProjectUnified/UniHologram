@@ -29,14 +29,14 @@ public interface DisplayHologram<T> extends Hologram<T> {
      *
      * @return the scale
      */
-    float getScale();
+    DisplayScale getScale();
 
     /**
      * Set the scale of the text
      *
      * @param scale the scale
      */
-    void setScale(float scale);
+    void setScale(DisplayScale scale);
 
     /**
      * Get the shadow radius

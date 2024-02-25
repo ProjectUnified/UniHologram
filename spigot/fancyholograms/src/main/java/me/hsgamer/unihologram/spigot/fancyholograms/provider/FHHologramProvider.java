@@ -1,6 +1,7 @@
 package me.hsgamer.unihologram.spigot.fancyholograms.provider;
 
-import de.oliver.fancyholograms.FancyHologramsPlugin;
+import de.oliver.fancyholograms.FancyHolograms;
+import de.oliver.fancyholograms.HologramManagerImpl;
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramProvider;
 import me.hsgamer.unihologram.spigot.fancyholograms.hologram.FHHologram;
@@ -32,12 +33,12 @@ public class FHHologramProvider implements HologramProvider<Location> {
 
     @Override
     public Optional<Hologram<Location>> getHologram(@NotNull String name) {
-        return FancyHologramsPlugin.get().getHologramsManager().getHologram(name).map(FHHologram::new);
+        return FancyHolograms.get().getHologramManager().getHologram(name).map(FHHologram::new);
     }
 
     @Override
     public Collection<Hologram<Location>> getAllHolograms() {
-        return FancyHologramsPlugin.get().getHologramsManager().getHolograms().stream().map(FHHologram::new).collect(Collectors.toSet());
+        return ((HologramManagerImpl) FancyHolograms.get().getHologramManager()).getHolograms().stream().map(FHHologram::new).collect(Collectors.toSet());
     }
 
     @Override
