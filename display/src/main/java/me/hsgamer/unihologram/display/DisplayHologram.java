@@ -108,19 +108,8 @@ public interface DisplayHologram<T> extends Hologram<T> {
      */
     void setAlignment(DisplayTextAlignment alignment);
 
-    /**
-     * Get the origin location.
-     * This is the location of the text display, while {@link Hologram#getLocation()} is the location of the top of the display.
-     *
-     * @return the origin location
-     */
-    T getOriginLocation();
-
-    /**
-     * Set the origin location
-     *
-     * @param originLocation the origin location
-     * @see #getOriginLocation()
-     */
-    void setOriginLocation(T originLocation);
+    @Override
+    default boolean isLocationBottom() {
+        return true;
+    }
 }

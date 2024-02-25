@@ -119,4 +119,13 @@ public interface Hologram<T> {
      * @param location the location
      */
     void setLocation(T location);
+
+    /**
+     * Check if the location is at the bottom of the hologram
+     *
+     * @return true if it is
+     */
+    default boolean isLocationBottom() {
+        return false;
+    }
 }
