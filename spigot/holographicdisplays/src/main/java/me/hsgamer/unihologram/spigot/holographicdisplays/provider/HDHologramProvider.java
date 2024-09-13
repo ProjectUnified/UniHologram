@@ -1,7 +1,7 @@
 package me.hsgamer.unihologram.spigot.holographicdisplays.provider;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.common.provider.LocalHologramProvider;
+import io.github.projectunified.unihologram.common.provider.LocalHologramProvider;
 import me.hsgamer.unihologram.spigot.holographicdisplays.hologram.HDHologram;
 import me.hsgamer.unihologram.spigot.holographicdisplays.hologram.HDLegacyHologram;
 import org.bukkit.Bukkit;

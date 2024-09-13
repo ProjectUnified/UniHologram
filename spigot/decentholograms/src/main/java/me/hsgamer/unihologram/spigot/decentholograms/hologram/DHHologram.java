@@ -7,7 +7,7 @@ import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import me.hsgamer.unihologram.common.api.HologramLine;
 import me.hsgamer.unihologram.common.api.PagedHologram;
-import me.hsgamer.unihologram.common.line.TextHologramLine;
+import io.github.projectunified.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerPage;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.PlayerVisibility;

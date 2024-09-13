@@ -2,8 +2,8 @@ package me.hsgamer.unihologram.spigot;
 
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramProvider;
-import me.hsgamer.unihologram.common.hologram.NoneHologram;
-import me.hsgamer.unihologram.common.provider.LocalHologramProvider;
+import io.github.projectunified.unihologram.common.hologram.NoneHologram;
+import io.github.projectunified.unihologram.common.provider.LocalHologramProvider;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;

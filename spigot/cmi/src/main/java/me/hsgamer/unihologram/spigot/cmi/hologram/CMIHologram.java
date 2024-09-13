@@ -4,7 +4,7 @@ import com.Zrips.CMI.CMI;
 import com.google.common.base.Preconditions;
 import me.hsgamer.unihologram.common.api.Hologram;
 import me.hsgamer.unihologram.common.api.HologramLine;
-import me.hsgamer.unihologram.common.line.TextHologramLine;
+import io.github.projectunified.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import me.hsgamer.unihologram.spigot.common.line.SkullHologramLine;
 import net.Zrips.CMILib.Container.CMILocation;

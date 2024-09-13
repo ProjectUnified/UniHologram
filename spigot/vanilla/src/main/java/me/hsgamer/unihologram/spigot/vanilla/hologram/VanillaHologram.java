@@ -1,8 +1,8 @@
 package me.hsgamer.unihologram.spigot.vanilla.hologram;
 
 import me.hsgamer.unihologram.common.api.HologramLine;
-import me.hsgamer.unihologram.common.hologram.SimpleHologram;
-import me.hsgamer.unihologram.common.line.TextHologramLine;
+import io.github.projectunified.unihologram.common.hologram.SimpleHologram;
+import io.github.projectunified.unihologram.common.line.TextHologramLine;
 import me.hsgamer.unihologram.spigot.common.hologram.extra.Colored;
 import me.hsgamer.unihologram.spigot.common.line.ItemHologramLine;
 import org.bukkit.Bukkit;

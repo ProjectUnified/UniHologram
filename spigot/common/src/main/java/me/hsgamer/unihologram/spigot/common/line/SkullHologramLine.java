@@ -1,6 +1,6 @@
 package me.hsgamer.unihologram.spigot.common.line;
 
-import me.hsgamer.unihologram.common.line.TextHologramLine;
+import io.github.projectunified.unihologram.common.line.TextHologramLine;
 
 import java.util.Map;
 

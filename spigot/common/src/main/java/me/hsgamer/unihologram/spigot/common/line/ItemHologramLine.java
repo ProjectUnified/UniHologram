@@ -1,6 +1,6 @@
 package me.hsgamer.unihologram.spigot.common.line;
 
-import me.hsgamer.unihologram.common.line.AbstractHologramLine;
+import io.github.projectunified.unihologram.common.line.AbstractHologramLine;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;

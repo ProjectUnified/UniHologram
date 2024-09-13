@@ -1,7 +1,7 @@
 package me.hsgamer.unihologram.spigot.folia.provider;
 
 import me.hsgamer.unihologram.common.api.Hologram;
-import me.hsgamer.unihologram.common.provider.LocalHologramProvider;
+import io.github.projectunified.unihologram.common.provider.LocalHologramProvider;
 import me.hsgamer.unihologram.spigot.folia.hologram.FoliaHologram;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
