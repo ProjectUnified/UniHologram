@@ -1,4 +1,4 @@
-main: me.hsgamer.unihologram.spigot.test.UniHologramTest
+main: io.github.projectunified.unihologram.spigot.test.UniHologramTest
 name: UniHologramTest
 version: "${project.version}"
 depend:

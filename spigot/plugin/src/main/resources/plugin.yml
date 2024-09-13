@@ -1,4 +1,4 @@
-main: me.hsgamer.unihologram.spigot.plugin.UniHologramPlugin
+main: io.github.projectunified.unihologram.spigot.plugin.UniHologramPlugin
 name: UniHologram
 version: "${project.version}"
 description: "${project.description}"
