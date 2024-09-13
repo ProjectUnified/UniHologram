@@ -85,7 +85,7 @@ public class DHHologram implements PagedHologram<Location>, PlayerPage, PlayerVi
     private HologramLine fromDHLine(eu.decentsoftware.holograms.api.holograms.HologramLine line) {
         switch (line.getType()) {
             case ICON:
-                return new ItemHologramLine(line.getItem().parse());
+                return new ItemHologramLine(line.getItem().parse(null));
             case SMALLHEAD:
             case HEAD:
                 return new SkullHologramLine(line.getItem().getExtras());
