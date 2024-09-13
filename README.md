@@ -9,34 +9,34 @@ A unified library to work with Minecraft's Hologram
 ```xml
 <!-- Spigot -->
 <dependency>
-    <groupId>me.hsgamer</groupId>
+    <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram-spigot-bundle</artifactId>
     <version>VERSION</version>
 </dependency>
 
 <!-- Hologram Providers for Spigot -->
 <dependency>
-    <groupId>me.hsgamer</groupId>
+    <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram-spigot-holographicdisplays</artifactId>
     <version>VERSION</version>
 </dependency>
 <dependency>
-    <groupId>me.hsgamer</groupId>
+    <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram-spigot-decentholograms</artifactId>
     <version>VERSION</version>
 </dependency>
 <dependency>
-    <groupId>me.hsgamer</groupId>
+    <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram-spigot-cmi</artifactId>
     <version>VERSION</version>
 </dependency>
 <dependency>
-    <groupId>me.hsgamer</groupId>
+    <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram-spigot-fancyholograms</artifactId>
     <version>VERSION</version>
 </dependency>
 <dependency>
-    <groupId>me.hsgamer</groupId>
+    <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram-spigot-vanilla</artifactId>
     <version>VERSION</version>
 </dependency>
