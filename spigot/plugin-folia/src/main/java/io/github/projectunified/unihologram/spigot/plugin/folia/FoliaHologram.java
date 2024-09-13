@@ -83,6 +83,7 @@ public class FoliaHologram extends SimpleHologram<Location> {
                             armorStand.setVisible(false);
                             armorStand.setCustomNameVisible(true);
                             armorStand.setInvulnerable(true);
+                            armorStand.setPersistent(false);
 
                             String content = line instanceof TextHologramLine
                                     ? ((TextHologramLine) line).getColoredContent()
