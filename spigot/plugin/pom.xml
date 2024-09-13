@@ -54,37 +54,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-bundle</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-holographicdisplays</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-decentholograms</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-fancyholograms</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-cmi</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-vanilla</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-folia</artifactId>
+            <artifactId>uni-hologram-spigot-plugin-picker</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

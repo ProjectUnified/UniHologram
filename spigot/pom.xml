@@ -10,16 +10,18 @@
     </parent>
     <packaging>pom</packaging>
     <modules>
-        <module>common</module>
-        <module>bundle</module>
         <module>test</module>
         <module>plugin</module>
-        <module>decentholograms</module>
-        <module>holographicdisplays</module>
-        <module>cmi</module>
-        <module>folia</module>
-        <module>vanilla</module>
-        <module>fancyholograms</module>
+        <module>plugin-decentholograms</module>
+        <module>plugin-holographicdisplays</module>
+        <module>plugin-cmi</module>
+        <module>plugin-folia</module>
+        <module>plugin-vanilla</module>
+        <module>plugin-fancyholograms</module>
+        <module>line</module>
+        <module>api-visibility</module>
+        <module>api-page</module>
+        <module>plugin-picker</module>
     </modules>
 
     <artifactId>uni-hologram-spigot</artifactId>

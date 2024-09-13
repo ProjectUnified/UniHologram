@@ -12,7 +12,7 @@
         <module>api</module>
         <module>api-display</module>
         <module>api-visibility</module>
-        <module>api-paged</module>
+        <module>api-page</module>
         <module>spigot</module>
         <module>picker</module>
         <module>api-local</module>

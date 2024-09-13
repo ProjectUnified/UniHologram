@@ -19,9 +19,8 @@ import java.util.function.Supplier;
  *
  * @param <I> The type of the input
  * @param <T> The type of the location of the hologram
- * @param <B> The type of the builder
  */
-public class HologramProviderPicker<I, T, B extends HologramProviderPicker<I, T, B>> {
+public class HologramProviderPicker<I, T> {
     private final I input;
     private final List<Entry<I, T>> entries = new ArrayList<>();
 
@@ -30,13 +29,8 @@ public class HologramProviderPicker<I, T, B extends HologramProviderPicker<I, T,
      *
      * @param input the input
      */
-    protected HologramProviderPicker(I input) {
+    public HologramProviderPicker(I input) {
         this.input = input;
-    }
-
-    @SuppressWarnings("unchecked")
-    private B self() {
-        return (B) this;
     }
 
     private HologramProvider<T> exceptionHologramProvider() {
@@ -67,9 +61,9 @@ public class HologramProviderPicker<I, T, B extends HologramProviderPicker<I, T,
      * @param provider  the provider
      * @return this
      */
-    public B add(Predicate<I> condition, Function<I, HologramProvider<T>> provider) {
+    public HologramProviderPicker<I, T> add(Predicate<I> condition, Function<I, HologramProvider<T>> provider) {
         entries.add(new Entry<>(condition, provider));
-        return self();
+        return this;
     }
 
     /**
@@ -79,7 +73,7 @@ public class HologramProviderPicker<I, T, B extends HologramProviderPicker<I, T,
      * @param provider  the provider
      * @return this
      */
-    public B add(BooleanSupplier condition, Function<I, HologramProvider<T>> provider) {
+    public HologramProviderPicker<I, T> add(BooleanSupplier condition, Function<I, HologramProvider<T>> provider) {
         return add(i -> condition.getAsBoolean(), provider);
     }
 
@@ -90,7 +84,7 @@ public class HologramProviderPicker<I, T, B extends HologramProviderPicker<I, T,
      * @param provider  the provider
      * @return this
      */
-    public B add(Predicate<I> condition, Supplier<HologramProvider<T>> provider) {
+    public HologramProviderPicker<I, T> add(Predicate<I> condition, Supplier<HologramProvider<T>> provider) {
         return add(condition, i -> provider.get());
     }
 
@@ -101,7 +95,7 @@ public class HologramProviderPicker<I, T, B extends HologramProviderPicker<I, T,
      * @param provider  the provider
      * @return this
      */
-    public B add(BooleanSupplier condition, Supplier<HologramProvider<T>> provider) {
+    public HologramProviderPicker<I, T> add(BooleanSupplier condition, Supplier<HologramProvider<T>> provider) {
         return add(i -> condition.getAsBoolean(), i -> provider.get());
     }
 

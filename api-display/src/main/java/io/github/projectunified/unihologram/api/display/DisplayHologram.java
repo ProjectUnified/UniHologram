@@ -5,7 +5,8 @@ import io.github.projectunified.unihologram.api.Hologram;
 import java.awt.*;
 
 /**
- * The {@link Hologram} that uses the new Minecraft TextDisplay API
+ * The {@link Hologram} that uses the new Minecraft TextDisplay API.
+ * Note that the location is at the bottom of the hologram. Users should check if the hologram is a {@link DisplayHologram} before working with location.
  *
  * @param <T> the type of the location
  */
