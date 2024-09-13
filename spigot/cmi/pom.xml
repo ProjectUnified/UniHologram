@@ -9,12 +9,26 @@
         <version>3.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-hologram-spigot-line</artifactId>
+    <artifactId>uni-hologram-spigot-cmi</artifactId>
 
     <dependencies>
         <dependency>
+            <groupId>CMI-API</groupId>
+            <artifactId>CMI-API</artifactId>
+            <version>9.6.4.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/CMI-API9.6.4.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>CMILib</groupId>
+            <artifactId>CMILib</artifactId>
+            <version>1.4.2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/CMILib1.4.2.1.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-api</artifactId>
+            <artifactId>uni-hologram-spigot-line</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

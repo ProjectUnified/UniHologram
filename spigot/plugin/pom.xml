@@ -54,7 +54,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.projectunified</groupId>
-            <artifactId>uni-hologram-spigot-plugin-picker</artifactId>
+            <artifactId>uni-hologram-spigot-picker</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

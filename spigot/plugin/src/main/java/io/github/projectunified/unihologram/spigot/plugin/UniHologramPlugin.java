@@ -1,7 +1,7 @@
 package io.github.projectunified.unihologram.spigot.plugin;
 
 import io.github.projectunified.unihologram.api.HologramProvider;
-import io.github.projectunified.unihologram.spigot.plugin.picker.SpigotHologramProviderPicker;
+import io.github.projectunified.unihologram.spigot.picker.SpigotHologramProviderPicker;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
