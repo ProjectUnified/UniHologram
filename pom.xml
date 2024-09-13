@@ -82,6 +82,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <source>${java.version}</source>
+                    <outputDirectory>${project.build.directory}/reports</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -158,7 +159,6 @@
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
-                            <tokenAuth>true</tokenAuth>
                             <autoPublish>true</autoPublish>
                             <deploymentName>HSCore</deploymentName>
                         </configuration>
