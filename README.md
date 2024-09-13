@@ -6,38 +6,14 @@ A unified library to work with Minecraft's Hologram
 
 ## Add as a dependency
 
-```xml
-<!-- Spigot -->
-<dependency>
-    <groupId>io.github.projectunified</groupId>
-    <artifactId>uni-hologram-spigot-bundle</artifactId>
-    <version>VERSION</version>
-</dependency>
+### Spigot
 
-<!-- Hologram Providers for Spigot -->
+```xml
 <dependency>
     <groupId>io.github.projectunified</groupId>
-    <artifactId>uni-hologram-spigot-holographicdisplays</artifactId>
-    <version>VERSION</version>
-</dependency>
-<dependency>
-    <groupId>io.github.projectunified</groupId>
-    <artifactId>uni-hologram-spigot-decentholograms</artifactId>
-    <version>VERSION</version>
-</dependency>
-<dependency>
-    <groupId>io.github.projectunified</groupId>
-    <artifactId>uni-hologram-spigot-cmi</artifactId>
-    <version>VERSION</version>
-</dependency>
-<dependency>
-    <groupId>io.github.projectunified</groupId>
-    <artifactId>uni-hologram-spigot-fancyholograms</artifactId>
-    <version>VERSION</version>
-</dependency>
-<dependency>
-    <groupId>io.github.projectunified</groupId>
-    <artifactId>uni-hologram-spigot-vanilla</artifactId>
+    <artifactId>uni-hologram-spigot-picker</artifactId>
     <version>VERSION</version>
 </dependency>
 ```
+
+(More details on the Wiki)
