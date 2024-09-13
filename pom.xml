@@ -160,7 +160,7 @@
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
-                            <deploymentName>HSCore</deploymentName>
+                            <deploymentName>UniHologram</deploymentName>
                         </configuration>
                     </plugin>
                 </plugins>
