@@ -1,5 +1,6 @@
 package io.github.projectunified.unihologram.spigot.picker;
 
+import io.github.projectunified.unihologram.api.HologramProvider;
 import io.github.projectunified.unihologram.picker.HologramProviderPicker;
 import io.github.projectunified.unihologram.spigot.cmi.CMIHologramProvider;
 import io.github.projectunified.unihologram.spigot.decentholograms.DHHologramProvider;
@@ -23,6 +24,10 @@ public class SpigotHologramProviderPicker extends HologramProviderPicker<Plugin,
         add(FHHologramProvider::isAvailable, FHHologramProvider::new);
         add(HDHologramProvider::isAvailable, HDHologramProvider::new);
         add(FoliaHologramProvider::isAvailable, FoliaHologramProvider::new);
-        add(() -> true, VanillaHologramProvider::new);
+    }
+
+    @Override
+    protected HologramProvider<Location> getDefaultProvider(Plugin input) {
+        return new VanillaHologramProvider(input);
     }
 }
