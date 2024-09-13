@@ -76,6 +76,7 @@ public class FoliaHologram extends SimpleHologram<Location> {
                             item.setPickupDelay(Integer.MAX_VALUE);
                             item.setCustomNameVisible(false);
                             item.setVelocity(new Vector(0, 0, 0));
+                            item.setPersistent(false);
                         });
                     } else {
                         entity = world.spawn(currentLocation, ArmorStand.class, armorStand -> {
