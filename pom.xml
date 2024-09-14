@@ -6,7 +6,7 @@
 
     <groupId>io.github.projectunified</groupId>
     <artifactId>uni-hologram</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <packaging>pom</packaging>
     <modules>
         <module>api</module>
