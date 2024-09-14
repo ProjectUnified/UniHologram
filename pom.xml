@@ -21,12 +21,12 @@
 
     <name>UniHologram</name>
     <description>A unified library to work with Minecraft's Hologram</description>
-    <url>https://github.com/HSGamer/UniHologram</url>
+    <url>https://github.com/ProjectUnified/UniHologram</url>
 
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/HSGamer/UniHologram/blob/master/LICENSE</url>
+            <url>https://github.com/ProjectUnified/UniHologram/blob/master/LICENSE</url>
         </license>
     </licenses>
 
@@ -40,13 +40,13 @@
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/HSGamer/UniHologram/issues</url>
+        <url>https://github.com/ProjectUnified/UniHologram/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:https://github.com/HSGamer/UniHologram.git</connection>
-        <developerConnection>scm:git:git@github.com:HSGamer/UniHologram.git</developerConnection>
-        <url>https://github.com/HSGamer/UniHologram</url>
+        <connection>scm:git:https://github.com/ProjectUnified/UniHologram.git</connection>
+        <developerConnection>scm:git:git@github.com:ProjectUnified/UniHologram.git</developerConnection>
+        <url>https://github.com/ProjectUnified/UniHologram</url>
     </scm>
 
     <properties>
@@ -108,25 +108,6 @@
     </dependencies>
 
     <profiles>
-        <profile>
-            <id>jenkins</id>
-            <activation>
-                <property>
-                    <name>env.JENKINS_HOME</name>
-                </property>
-            </activation>
-
-            <distributionManagement>
-                <repository>
-                    <id>codemc-releases</id>
-                    <url>https://repo.codemc.io/repository/maven-releases/</url>
-                </repository>
-                <snapshotRepository>
-                    <id>codemc-snapshots</id>
-                    <url>https://repo.codemc.io/repository/maven-snapshots/</url>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
         <profile>
             <id>central</id>
             <build>
