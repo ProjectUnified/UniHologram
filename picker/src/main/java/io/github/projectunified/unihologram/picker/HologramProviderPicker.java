@@ -1,13 +1,9 @@
 package io.github.projectunified.unihologram.picker;
 
-import io.github.projectunified.unihologram.api.Hologram;
 import io.github.projectunified.unihologram.api.HologramProvider;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -31,27 +27,6 @@ public class HologramProviderPicker<I, T> {
      */
     public HologramProviderPicker(I input) {
         this.input = input;
-    }
-
-    private HologramProvider<T> exceptionHologramProvider() {
-        return new HologramProvider<T>() {
-            private final UnsupportedOperationException exception = new UnsupportedOperationException("This is an exception hologram provider. If you see this, that means your hologram provider picker is not working correctly");
-
-            @Override
-            public @NotNull Hologram<T> createHologram(@NotNull String name, @NotNull T location) {
-                throw exception;
-            }
-
-            @Override
-            public Optional<Hologram<T>> getHologram(@NotNull String name) {
-                throw exception;
-            }
-
-            @Override
-            public Collection<Hologram<T>> getAllHolograms() {
-                throw exception;
-            }
-        };
     }
 
     /**
@@ -114,13 +89,14 @@ public class HologramProviderPicker<I, T> {
     }
 
     /**
-     * Get the default provider
+     * Get the default provider.
+     * By default, this throws an exception.
      *
      * @param input the input
      * @return the default provider
      */
     protected HologramProvider<T> getDefaultProvider(I input) {
-        return exceptionHologramProvider();
+        throw new IllegalStateException("No default provider is set");
     }
 
     private static class Entry<I, T> {
