@@ -1,10 +1,12 @@
 package io.github.projectunified.unihologram.spigot.fancyholograms;
 
 import com.google.common.base.Preconditions;
-import de.oliver.fancyholograms.HologramManagerImpl;
 import de.oliver.fancyholograms.api.FancyHologramsPlugin;
-import de.oliver.fancyholograms.api.Hologram;
-import de.oliver.fancyholograms.api.HologramData;
+import de.oliver.fancyholograms.api.data.DisplayHologramData;
+import de.oliver.fancyholograms.api.data.HologramData;
+import de.oliver.fancyholograms.api.data.TextHologramData;
+import de.oliver.fancyholograms.api.hologram.Hologram;
+import de.oliver.fancyholograms.api.hologram.HologramType;
 import io.github.projectunified.unihologram.api.HologramLine;
 import io.github.projectunified.unihologram.api.display.DisplayBillboard;
 import io.github.projectunified.unihologram.api.display.DisplayHologram;
@@ -12,8 +14,13 @@ import io.github.projectunified.unihologram.api.display.DisplayScale;
 import io.github.projectunified.unihologram.api.display.DisplayTextAlignment;
 import io.github.projectunified.unihologram.spigot.api.visibility.PlayerVisibility;
 import io.github.projectunified.unihologram.spigot.line.TextHologramLine;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
@@ -23,13 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * The hologram for FancyHolograms
@@ -44,8 +44,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
      * @param location the location of the hologram
      */
     public FHHologram(String name, Location location) {
-        HologramData data = new HologramData(name);
-        data.setLocation(location);
+        HologramData data = new HologramData(name, HologramType.TEXT, location);
         this.hologram = FancyHologramsPlugin.get().getHologramManager().create(data);
     }
 
@@ -63,8 +62,8 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     }
 
     private void updateHologram() {
-        hologram.updateHologram();
-        ((HologramManagerImpl) FancyHologramsPlugin.get().getHologramManager()).refreshHologramForPlayersInWorld(hologram);
+        hologram.queueUpdate();
+        hologram.refreshForViewersInWorld();
     }
 
     private String toText(HologramLine line) {
@@ -73,7 +72,8 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
             boolean isMini = Boolean.parseBoolean(Objects.toString(line.getSettings().getOrDefault("mini", "false")));
             if (isMini) {
                 return content;
-            } else {
+            }
+            else {
                 Component component = LegacyComponentSerializer.legacySection().deserialize(content);
                 return MiniMessage.miniMessage().serializeOr(component, content);
             }
@@ -88,13 +88,15 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public @NotNull List<HologramLine> getLines() {
         checkHologramInitialized();
-        return hologram.getData().getText().stream().<HologramLine>map(TextHologramLine::new).collect(Collectors.toList());
+        TextHologramData data = (TextHologramData) hologram.getData();
+        return data.getText().stream().<HologramLine>map(TextHologramLine::new).collect(Collectors.toList());
     }
 
     @Override
     public void setLines(@NotNull List<HologramLine> lines) {
         checkHologramInitialized();
-        hologram.getData().setText(toText(lines));
+        List<String> text = toText(lines);
+        ((TextHologramData) hologram.getData()).setText(text);
         updateHologram();
     }
 
@@ -141,7 +143,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
 
     @Override
     public boolean isInitialized() {
-        return ((HologramManagerImpl) FancyHologramsPlugin.get().getHologramManager()).getHolograms().contains(hologram);
+        return FancyHologramsPlugin.get().getHologramManager().getHolograms().contains(hologram);
     }
 
     @Override
@@ -160,7 +162,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public boolean isVisible(Player viewer) {
         checkHologramInitialized();
-        return hologram.isShown(viewer);
+        return hologram.isViewer(viewer);
     }
 
     @Override
@@ -190,74 +192,84 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public Color getBackgroundColor() {
         checkHologramInitialized();
-        TextColor color = hologram.getData().getBackground();
-        return color != null ? new Color(color.red(), color.green(), color.blue()) : null;
+        org.bukkit.Color background = ((TextHologramData) hologram.getData()).getBackground();
+
+        return background != null ? new Color(background.getRed(), background.getGreen(), background.getBlue()) : null;
     }
 
     @Override
     public void setBackgroundColor(Color color) {
         checkHologramInitialized();
-        hologram.getData().setBackground(color != null ? TextColor.color(color.getRed(), color.getGreen(), color.getBlue()) : null);
+        ((TextHologramData) hologram.getData()).setBackground(org.bukkit.Color.fromRGB(
+                color.getRed(),
+                color.getGreen(),
+                color.getBlue()));
         updateHologram();
     }
 
     @Override
     public DisplayScale getScale() {
         checkHologramInitialized();
-        Vector3f scale = hologram.getData().getScale();
+        DisplayHologramData data = (DisplayHologramData) hologram.getData();
+        Vector3f scale = data.getScale();
         return new DisplayScale(scale.x(), scale.y(), scale.z());
     }
 
     @Override
     public void setScale(DisplayScale scale) {
         checkHologramInitialized();
-        hologram.getData().setScale(scale.x, scale.y, scale.z);
+        Vector3f vectorScale = new Vector3f(scale.x, scale.y, scale.z);
+        DisplayHologramData data = (DisplayHologramData) hologram.getData();
+        data.setScale(vectorScale);
         updateHologram();
     }
 
     @Override
     public float getShadowRadius() {
         checkHologramInitialized();
-        return hologram.getData().getShadowRadius();
+        return hologram.getDisplayEntity().getShadowRadius();
     }
 
     @Override
     public void setShadowRadius(float radius) {
         checkHologramInitialized();
-        hologram.getData().setShadowRadius(radius);
+        hologram.getDisplayEntity().setShadowRadius(radius);
         updateHologram();
     }
 
     @Override
     public float getShadowStrength() {
         checkHologramInitialized();
-        return hologram.getData().getShadowStrength();
+        return hologram.getDisplayEntity().getShadowStrength();
     }
 
     @Override
     public void setShadowStrength(float strength) {
         checkHologramInitialized();
-        hologram.getData().setShadowStrength(strength);
+        hologram.getDisplayEntity().setShadowStrength(strength);
         updateHologram();
     }
 
     @Override
     public boolean isShadowed() {
         checkHologramInitialized();
-        return hologram.getData().isTextHasShadow();
+        TextHologramData data = (TextHologramData) hologram.getData();
+
+        return data.hasTextShadow();
     }
 
     @Override
     public void setShadowed(boolean shadowed) {
         checkHologramInitialized();
-        hologram.getData().setTextHasShadow(shadowed);
+        TextHologramData data = (TextHologramData) hologram.getData();
+        data.setTextShadow(shadowed);
         updateHologram();
     }
 
     @Override
     public DisplayBillboard getBillboard() {
         checkHologramInitialized();
-        switch (hologram.getData().getBillboard()) {
+        switch (hologram.getDisplayEntity().getBillboard()) {
             case FIXED:
                 return DisplayBillboard.FIXED;
             case VERTICAL:
@@ -274,16 +286,16 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
         checkHologramInitialized();
         switch (billboard) {
             case FIXED:
-                hologram.getData().setBillboard(Display.Billboard.FIXED);
+                hologram.getDisplayEntity().setBillboard(Display.Billboard.FIXED);
                 break;
             case VERTICAL:
-                hologram.getData().setBillboard(Display.Billboard.VERTICAL);
+                hologram.getDisplayEntity().setBillboard(Display.Billboard.VERTICAL);
                 break;
             case HORIZONTAL:
-                hologram.getData().setBillboard(Display.Billboard.HORIZONTAL);
+                hologram.getDisplayEntity().setBillboard(Display.Billboard.HORIZONTAL);
                 break;
             default:
-                hologram.getData().setBillboard(Display.Billboard.CENTER);
+                hologram.getDisplayEntity().setBillboard(Display.Billboard.CENTER);
                 break;
         }
         updateHologram();
@@ -292,7 +304,9 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public DisplayTextAlignment getAlignment() {
         checkHologramInitialized();
-        switch (hologram.getData().getTextAlignment()) {
+        TextHologramData data = (TextHologramData) hologram.getData();
+
+        switch (data.getTextAlignment()) {
             case LEFT:
                 return DisplayTextAlignment.LEFT;
             case RIGHT:
@@ -305,15 +319,17 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public void setAlignment(DisplayTextAlignment alignment) {
         checkHologramInitialized();
+        TextHologramData data = (TextHologramData) hologram.getData();
+
         switch (alignment) {
             case LEFT:
-                hologram.getData().setTextAlignment(TextDisplay.TextAlignment.LEFT);
+                data.setTextAlignment(TextDisplay.TextAlignment.LEFT);
                 break;
             case RIGHT:
-                hologram.getData().setTextAlignment(TextDisplay.TextAlignment.RIGHT);
+                data.setTextAlignment(TextDisplay.TextAlignment.RIGHT);
                 break;
             default:
-                hologram.getData().setTextAlignment(TextDisplay.TextAlignment.CENTER);
+                data.setTextAlignment(TextDisplay.TextAlignment.CENTER);
                 break;
         }
         updateHologram();

@@ -1,16 +1,14 @@
 package io.github.projectunified.unihologram.spigot.fancyholograms;
 
-import de.oliver.fancyholograms.FancyHolograms;
-import de.oliver.fancyholograms.HologramManagerImpl;
+import de.oliver.fancyholograms.api.FancyHologramsPlugin;
 import io.github.projectunified.unihologram.api.Hologram;
 import io.github.projectunified.unihologram.api.HologramProvider;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The hologram provider for FancyHolograms
@@ -32,11 +30,14 @@ public class FHHologramProvider implements HologramProvider<Location> {
 
     @Override
     public Optional<Hologram<Location>> getHologram(@NotNull String name) {
-        return FancyHolograms.get().getHologramManager().getHologram(name).map(FHHologram::new);
+        return FancyHologramsPlugin.get().getHologramManager().getHologram(name).map(FHHologram::new);
     }
 
     @Override
     public Collection<Hologram<Location>> getAllHolograms() {
-        return ((HologramManagerImpl) FancyHolograms.get().getHologramManager()).getHolograms().stream().map(FHHologram::new).collect(Collectors.toSet());
+        return FancyHologramsPlugin.get().getHologramManager().getHolograms()
+                .stream()
+                .map(FHHologram::new)
+                .collect(Collectors.toSet());
     }
 }
