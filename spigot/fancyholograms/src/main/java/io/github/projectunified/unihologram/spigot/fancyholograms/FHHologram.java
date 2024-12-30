@@ -227,26 +227,26 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public float getShadowRadius() {
         checkHologramInitialized();
-        return hologram.getDisplayEntity().getShadowRadius();
+        return ((DisplayHologramData) hologram.getData()).getShadowRadius();
     }
 
     @Override
     public void setShadowRadius(float radius) {
         checkHologramInitialized();
-        hologram.getDisplayEntity().setShadowRadius(radius);
+        ((DisplayHologramData) hologram.getData()).setShadowRadius(radius);
         updateHologram();
     }
 
     @Override
     public float getShadowStrength() {
         checkHologramInitialized();
-        return hologram.getDisplayEntity().getShadowStrength();
+        return ((DisplayHologramData) hologram.getData()).getShadowStrength();
     }
 
     @Override
     public void setShadowStrength(float strength) {
         checkHologramInitialized();
-        hologram.getDisplayEntity().setShadowStrength(strength);
+        ((DisplayHologramData) hologram.getData()).setShadowStrength(strength);
         updateHologram();
     }
 
@@ -269,7 +269,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public DisplayBillboard getBillboard() {
         checkHologramInitialized();
-        switch (hologram.getDisplayEntity().getBillboard()) {
+        switch (((DisplayHologramData) hologram.getData()).getBillboard()) {
             case FIXED:
                 return DisplayBillboard.FIXED;
             case VERTICAL:
@@ -284,18 +284,19 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public void setBillboard(DisplayBillboard billboard) {
         checkHologramInitialized();
+        DisplayHologramData data = (DisplayHologramData) hologram.getData();
         switch (billboard) {
             case FIXED:
-                hologram.getDisplayEntity().setBillboard(Display.Billboard.FIXED);
+                data.setBillboard(Display.Billboard.FIXED);
                 break;
             case VERTICAL:
-                hologram.getDisplayEntity().setBillboard(Display.Billboard.VERTICAL);
+                data.setBillboard(Display.Billboard.VERTICAL);
                 break;
             case HORIZONTAL:
-                hologram.getDisplayEntity().setBillboard(Display.Billboard.HORIZONTAL);
+                data.setBillboard(Display.Billboard.HORIZONTAL);
                 break;
             default:
-                hologram.getDisplayEntity().setBillboard(Display.Billboard.CENTER);
+                data.setBillboard(Display.Billboard.CENTER);
                 break;
         }
         updateHologram();
