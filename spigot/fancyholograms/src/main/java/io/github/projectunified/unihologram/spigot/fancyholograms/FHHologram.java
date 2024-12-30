@@ -45,6 +45,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
      */
     public FHHologram(String name, Location location) {
         HologramData data = new TextHologramData(name, location);
+        data.setPersistent(false);
         this.hologram = FancyHologramsPlugin.get().getHologramManager().create(data);
     }
 
@@ -62,7 +63,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     }
 
     private void updateHologram() {
-        hologram.queueUpdate();
+        hologram.forceUpdate();
         hologram.refreshForViewersInWorld();
     }
 
@@ -129,14 +130,12 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
     @Override
     public void init() {
         hologram.createHologram();
-        hologram.showHologram(Bukkit.getOnlinePlayers());
+        Bukkit.getOnlinePlayers().forEach(hologram::updateShownStateFor);
         FancyHologramsPlugin.get().getHologramManager().addHologram(hologram);
     }
 
     @Override
     public void clear() {
-        hologram.hideHologram(Bukkit.getOnlinePlayers());
-        hologram.deleteHologram();
         FancyHologramsPlugin.get().getHologramManager().removeHologram(hologram);
     }
 
