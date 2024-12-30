@@ -23,11 +23,13 @@
             <groupId>CMI-API</groupId>
             <artifactId>CMI-API</artifactId>
             <version>9.6.4.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>CMILib</groupId>
             <artifactId>CMILib</artifactId>
             <version>1.4.2.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.github.projectunified</groupId>

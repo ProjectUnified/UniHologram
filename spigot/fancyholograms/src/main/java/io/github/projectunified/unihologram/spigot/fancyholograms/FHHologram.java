@@ -6,7 +6,6 @@ import de.oliver.fancyholograms.api.data.DisplayHologramData;
 import de.oliver.fancyholograms.api.data.HologramData;
 import de.oliver.fancyholograms.api.data.TextHologramData;
 import de.oliver.fancyholograms.api.hologram.Hologram;
-import de.oliver.fancyholograms.api.hologram.HologramType;
 import io.github.projectunified.unihologram.api.HologramLine;
 import io.github.projectunified.unihologram.api.display.DisplayBillboard;
 import io.github.projectunified.unihologram.api.display.DisplayHologram;
@@ -45,7 +44,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
      * @param location the location of the hologram
      */
     public FHHologram(String name, Location location) {
-        HologramData data = new HologramData(name, HologramType.TEXT, location);
+        HologramData data = new TextHologramData(name, location);
         this.hologram = FancyHologramsPlugin.get().getHologramManager().create(data);
     }
 
