@@ -14,12 +14,6 @@ import io.github.projectunified.unihologram.api.display.DisplayScale;
 import io.github.projectunified.unihologram.api.display.DisplayTextAlignment;
 import io.github.projectunified.unihologram.spigot.api.visibility.PlayerVisibility;
 import io.github.projectunified.unihologram.spigot.line.TextHologramLine;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -30,6 +24,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * The hologram for FancyHolograms
@@ -72,8 +73,7 @@ public class FHHologram implements PlayerVisibility, DisplayHologram<Location> {
             boolean isMini = Boolean.parseBoolean(Objects.toString(line.getSettings().getOrDefault("mini", "false")));
             if (isMini) {
                 return content;
-            }
-            else {
+            } else {
                 Component component = LegacyComponentSerializer.legacySection().deserialize(content);
                 return MiniMessage.miniMessage().serializeOr(component, content);
             }

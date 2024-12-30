@@ -3,12 +3,13 @@ package io.github.projectunified.unihologram.spigot.fancyholograms;
 import de.oliver.fancyholograms.api.FancyHologramsPlugin;
 import io.github.projectunified.unihologram.api.Hologram;
 import io.github.projectunified.unihologram.api.HologramProvider;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The hologram provider for FancyHolograms
