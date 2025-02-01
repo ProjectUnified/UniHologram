@@ -12,7 +12,32 @@ import java.util.*;
  * @param <T> the type of the location
  */
 public abstract class LocalHologramProvider<T> implements HologramProvider<T> {
-    private final Map<String, Hologram<T>> createdHolograms = new HashMap<>();
+    private static final int CLEANUP_SIZE = 256;
+
+    private final Map<String, Hologram<T>> createdHolograms = new LinkedHashMap<String, Hologram<T>>(16, 0.75F, true) {
+        @Override
+        protected boolean removeEldestEntry(@NotNull Map.Entry<String, Hologram<T>> eldest) {
+            if (size() > CLEANUP_SIZE) {
+                final Hologram<T> hologram = eldest.getValue();
+                if (hologram == null) {
+                    return true;
+                } else {
+                    if (hologram.isInitialized()) {
+                        changeToNewestAccessOrder(eldest);
+                    } else {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        // Change the access-order from the oldest to the newest.
+        private void changeToNewestAccessOrder(@NotNull Map.Entry<String, Hologram<T>> eldest) {
+            get(eldest);
+        }
+    };
 
     /**
      * Make a new hologram
