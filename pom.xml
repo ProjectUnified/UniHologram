@@ -63,7 +63,7 @@
                     <target>${java.version}</target>
                 </configuration>
                 <groupId>org.apache.maven.plugins</groupId>
-                <version>3.13.0</version>
+                <version>3.14.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
