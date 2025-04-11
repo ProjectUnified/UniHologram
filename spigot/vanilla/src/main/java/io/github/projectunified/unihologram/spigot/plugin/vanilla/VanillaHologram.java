@@ -1,5 +1,6 @@
 package io.github.projectunified.unihologram.spigot.plugin.vanilla;
 
+import io.github.projectunified.unihologram.api.Hologram;
 import io.github.projectunified.unihologram.api.HologramLine;
 import io.github.projectunified.unihologram.api.simple.SimpleHologram;
 import io.github.projectunified.unihologram.spigot.line.ItemHologramLine;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,18 +47,24 @@ public class VanillaHologram extends SimpleHologram<Location> {
     private final AtomicReference<List<Entity>> newEntitiesRef = new AtomicReference<>();
     private final AtomicReference<List<HologramLine>> linesRef = new AtomicReference<>();
     private final Plugin plugin;
+    private final Consumer<Hologram<Location>> onCreate;
+    private final Runnable onDestroy;
     private BukkitTask updateTask;
 
     /**
      * Create a new hologram
      *
-     * @param plugin   the plugin
-     * @param name     the name of the hologram
-     * @param location the location of the hologram
+     * @param plugin    the plugin
+     * @param name      the name of the hologram
+     * @param location  the location of the hologram
+     * @param onCreate  the action to run when the hologram is created
+     * @param onDestroy the action to run when the hologram is destroyed
      */
-    public VanillaHologram(Plugin plugin, String name, Location location) {
+    public VanillaHologram(Plugin plugin, String name, Location location, @NotNull Consumer<Hologram<Location>> onCreate, @NotNull Runnable onDestroy) {
         super(name, location);
         this.plugin = plugin;
+        this.onCreate = onCreate;
+        this.onDestroy = onDestroy;
     }
 
     private static void removeIfNotNull(Entity entity) {
@@ -83,6 +92,7 @@ public class VanillaHologram extends SimpleHologram<Location> {
             updateTask = null;
         }
         updateTask = Bukkit.getScheduler().runTaskTimer(plugin, this::updateHologramEntity, 5, 5);
+        onCreate.accept(this);
     }
 
     private void clearEntityQueue() {
@@ -197,5 +207,6 @@ public class VanillaHologram extends SimpleHologram<Location> {
         }
 
         linesRef.set(null);
+        onDestroy.run();
     }
 }

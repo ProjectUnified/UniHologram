@@ -5,6 +5,7 @@ import io.github.projectunified.unihologram.api.HologramProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * A hologram provider that stores created holograms
@@ -17,11 +18,13 @@ public abstract class LocalHologramProvider<T> implements HologramProvider<T> {
     /**
      * Make a new hologram
      *
-     * @param name     the name of the hologram
-     * @param location the location of the hologram
+     * @param name      the name of the hologram
+     * @param location  the location of the hologram
+     * @param onCreate  the action to run when the hologram is created
+     * @param onDestroy the action to run when the hologram is destroyed
      * @return the hologram
      */
-    protected abstract @NotNull Hologram<T> newHologram(@NotNull String name, @NotNull T location);
+    protected abstract @NotNull Hologram<T> newHologram(@NotNull String name, @NotNull T location, @NotNull Consumer<Hologram<T>> onCreate, @NotNull Runnable onDestroy);
 
     /**
      * Create a new hologram
@@ -35,9 +38,9 @@ public abstract class LocalHologramProvider<T> implements HologramProvider<T> {
         if (createdHolograms.containsKey(name)) {
             throw new IllegalArgumentException("Hologram " + name + " already exists");
         }
-        Hologram<T> hologram = newHologram(name, location);
-        createdHolograms.put(name, hologram);
-        return hologram;
+        Consumer<Hologram<T>> onCreate = hologram -> createdHolograms.put(name, hologram);
+        Runnable onDestroy = () -> createdHolograms.remove(name);
+        return newHologram(name, location, onCreate, onDestroy);
     }
 
     /**

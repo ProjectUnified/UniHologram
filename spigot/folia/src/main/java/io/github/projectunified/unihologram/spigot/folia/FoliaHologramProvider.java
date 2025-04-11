@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Consumer;
+
 /**
  * The hologram provider for Folia
  */
@@ -36,7 +38,7 @@ public class FoliaHologramProvider extends LocalHologramProvider<Location> {
     }
 
     @Override
-    protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location) {
-        return new FoliaHologram(plugin, name, location);
+    protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location, @NotNull Consumer<Hologram<Location>> onCreate, @NotNull Runnable onDestroy) {
+        return new FoliaHologram(plugin, name, location, onCreate, onDestroy);
     }
 }

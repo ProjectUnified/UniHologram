@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Consumer;
+
 /**
  * The hologram provider for Vanilla
  */
@@ -22,7 +24,7 @@ public class VanillaHologramProvider extends LocalHologramProvider<Location> {
     }
 
     @Override
-    protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location) {
-        return new VanillaHologram(plugin, name, location);
+    protected @NotNull Hologram<Location> newHologram(@NotNull String name, @NotNull Location location, @NotNull Consumer<Hologram<Location>> onCreate, @NotNull Runnable onDestroy) {
+        return new VanillaHologram(plugin, name, location, onCreate, onDestroy);
     }
 }

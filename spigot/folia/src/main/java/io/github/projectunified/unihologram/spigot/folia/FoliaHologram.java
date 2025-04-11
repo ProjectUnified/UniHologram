@@ -1,5 +1,6 @@
 package io.github.projectunified.unihologram.spigot.folia;
 
+import io.github.projectunified.unihologram.api.Hologram;
 import io.github.projectunified.unihologram.api.HologramLine;
 import io.github.projectunified.unihologram.api.simple.SimpleHologram;
 import io.github.projectunified.unihologram.spigot.line.ItemHologramLine;
@@ -13,29 +14,37 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * A simple hologram for Folia
  */
 public class FoliaHologram extends SimpleHologram<Location> {
     private final Plugin plugin;
+    private final Consumer<Hologram<Location>> onCreate;
+    private final Runnable onDestroy;
     private final AtomicReference<List<Entity>> entityRef = new AtomicReference<>();
     private final Object lock = new Object();
 
     /**
      * Create a new hologram
      *
-     * @param plugin   the plugin
-     * @param name     the name of the hologram
-     * @param location the location of the hologram
+     * @param plugin    the plugin
+     * @param name      the name of the hologram
+     * @param location  the location of the hologram
+     * @param onCreate  the action to run when the hologram is created
+     * @param onDestroy the action to run when the hologram is destroyed
      */
-    public FoliaHologram(Plugin plugin, String name, Location location) {
+    public FoliaHologram(Plugin plugin, String name, Location location, @NotNull Consumer<Hologram<Location>> onCreate, @NotNull Runnable onDestroy) {
         super(name, location);
         this.plugin = plugin;
+        this.onCreate = onCreate;
+        this.onDestroy = onDestroy;
     }
 
     private void despawnEntity() {
@@ -104,7 +113,7 @@ public class FoliaHologram extends SimpleHologram<Location> {
 
     @Override
     protected void initHologram() {
-        // EMPTY
+        onCreate.accept(this);
     }
 
     @Override
@@ -112,6 +121,7 @@ public class FoliaHologram extends SimpleHologram<Location> {
         // TODO: Find out a reason why the entities don't get removed when the server stops
         synchronized (lock) {
             despawnEntity();
+            onDestroy.run();
         }
     }
 }

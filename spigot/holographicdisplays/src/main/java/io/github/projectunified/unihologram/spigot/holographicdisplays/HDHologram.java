@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -26,18 +27,24 @@ import java.util.function.Supplier;
  */
 public class HDHologram implements io.github.projectunified.unihologram.api.Hologram<Location>, PlayerVisibility {
     private final String name;
+    private final Consumer<io.github.projectunified.unihologram.api.Hologram<Location>> onCreate;
+    private final Runnable onDestroy;
     private final Supplier<Hologram> hologramSupplier;
     private Hologram hologram;
 
     /**
      * Create a new hologram
      *
-     * @param plugin   the plugin
-     * @param name     the name
-     * @param location the location
+     * @param plugin    the plugin
+     * @param name      the name
+     * @param location  the location
+     * @param onCreate  the action to run when the hologram is created
+     * @param onDestroy the action to run when the hologram is destroyed
      */
-    public HDHologram(Plugin plugin, String name, Location location) {
+    public HDHologram(Plugin plugin, String name, Location location, @NotNull Consumer<io.github.projectunified.unihologram.api.Hologram<Location>> onCreate, @NotNull Runnable onDestroy) {
         this.name = name;
+        this.onCreate = onCreate;
+        this.onDestroy = onDestroy;
         this.hologramSupplier = () -> HolographicDisplaysAPI.get(plugin).createHologram(location);
     }
 
@@ -143,6 +150,7 @@ public class HDHologram implements io.github.projectunified.unihologram.api.Holo
     @Override
     public void init() {
         hologram = hologramSupplier.get();
+        onCreate.accept(this);
     }
 
     @Override
@@ -151,6 +159,7 @@ public class HDHologram implements io.github.projectunified.unihologram.api.Holo
             if (hologram != null) {
                 hologram.delete();
                 hologram = null;
+                onDestroy.run();
             }
         } catch (Exception ignored) {
             // IGNORED
