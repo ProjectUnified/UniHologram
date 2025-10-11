@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-picker</artifactId>
+    <name>UniHologram Spigot Picker</name>
 
     <dependencies>
         <dependency>

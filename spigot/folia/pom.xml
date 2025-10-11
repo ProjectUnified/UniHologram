@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-folia</artifactId>
+    <name>UniHologram Spigot Folia</name>
 
     <repositories>
         <repository>

@@ -25,6 +25,7 @@
     </modules>
 
     <artifactId>uni-hologram-spigot</artifactId>
+    <name>UniHologram Spigot</name>
 
     <repositories>
         <repository>

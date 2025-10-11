@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-picker</artifactId>
+    <name>UniHologram Picker</name>
 
     <dependencies>
         <dependency>

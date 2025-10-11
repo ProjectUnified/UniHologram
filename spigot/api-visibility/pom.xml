@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-api-visibility</artifactId>
+    <name>UniHologram Spigot Api Visibility</name>
 
     <dependencies>
         <dependency>

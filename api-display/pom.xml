@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-api-display</artifactId>
+    <name>UniHologram Api Display</name>
 
     <dependencies>
         <dependency>

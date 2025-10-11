@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-plugin</artifactId>
+    <name>UniHologram Spigot Plugin</name>
 
     <properties>
         <core.version>4.3.10</core.version>

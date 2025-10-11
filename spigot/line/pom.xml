@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-line</artifactId>
+    <name>UniHologram Spigot Line</name>
 
     <dependencies>
         <dependency>

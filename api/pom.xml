@@ -10,4 +10,5 @@
     </parent>
 
     <artifactId>uni-hologram-api</artifactId>
+    <name>UniHologram Api</name>
 </project>

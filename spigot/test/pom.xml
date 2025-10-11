@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-test</artifactId>
+    <name>UniHologram Spigot Test</name>
 
     <properties>
         <core.version>4.3.30</core.version>

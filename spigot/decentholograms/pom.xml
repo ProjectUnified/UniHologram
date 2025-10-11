@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-decentholograms</artifactId>
+    <name>UniHologram Spigot Decentholograms</name>
 
     <repositories>
         <repository>

@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-fancyholograms</artifactId>
+    <name>UniHologram Spigot Fancyholograms</name>
 
     <repositories>
         <repository>

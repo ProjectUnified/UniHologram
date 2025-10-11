@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-api-simple</artifactId>
+    <name>UniHologram Api Simple</name>
 
     <dependencies>
         <dependency>

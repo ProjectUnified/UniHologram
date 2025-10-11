@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>uni-hologram-spigot-api-page</artifactId>
+    <name>UniHologram Spigot Api Page</name>
 
     <dependencies>
         <dependency>
